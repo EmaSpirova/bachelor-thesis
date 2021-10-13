@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Details about location</title>
+</head>
+<body>
+<bold th:text="${location.get().name}"> </bold>
+<p th:text="${location.get().getAddress()}"></p>
+<br>
+<p th:text="${location.get().getDescription()}"></p>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+###
+GET http://localhost:8080/api/locations
+
+###
+GET http://localhost:8080/api/location/1
+
+###
+POST http://localhost:8080/api/planner
+Content-Type: application/x-www-form-urlencoded
+
+description=Fourth Planner Description&name=Fourth Planner&locationList=
+
+###
+POST http://localhost:8080/api/planner/new
+Content-Type: application/json
+
+{"name": "Sixth Planner Check", "description": "First Planner Description", "locationList" : []}
+
+###
+PUT http://localhost:8080/api/edit/planner/6
+Content-Type: application/json
+
+{"name": "Sixth Planner Check", "description": "Sixth Planner Description", "locationList" : []}
+
+###
+GET http://localhost:8080/api/planners
+
+###
+GET http://localhost:8080/api/planner/1
+
+###
+POST http://localhost:8080/api/trip/locations
+Content-Type: application/x-www-form-urlencoded
+
+locName=Macedonia&companion=Wandering Solo&region=Skopje Region&categories=sightseeing&numberOfDays=1
+
+###
+GET http://localhost:8080/api/companions
+
+###
+GET http://localhost:8080/api/categories
+
+###
+GET http://localhost:8080/api/regions
+
+###
+GET http://localhost:8080/api/cities
+
+###
+GET http://localhost:8080/api/countries
+
+###
+PUT http://localhost:8080/api/add-location
+Content-Type: application/x-www-form-urlencoded
+
+lid=1&pid=1

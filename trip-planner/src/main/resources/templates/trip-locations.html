@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <title>Trip Locations</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="/getrequest.js"></script>
+  <style>
+    .bg-modal{
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      appacity: 0.7;
+      position: absolute;
+      top:0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      display: none;
+    }
+    .modal-content{
+      width: 500px;
+      height: 300px;
+      background-color: white;
+      border-radius: 4px;
+      padding: 20px;
+      position: relative;
+      top: 25%;
+      margin: 0 auto;
+    }
+    .close{
+      position: absolute;
+      top: 0;
+      right: 14px;
+      font-size: 42px;
+      transform: rotate(45deg);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mb-4" >
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Location name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="loc : ${countryLocations}" >
+            <td th:text="${loc.getName()}" ></td>
+            <td th:text="${loc.getId()}"  ></td>
+        <!--    <td><img th:src="*{'data:image/jpeg;base64,'+ imgUtil.getImgData(loc.getPhoto())}" alt="" /></td> -->
+            <td class="selectedLocation">
+              <a th:href="@{'/create/trip/locations/{id}' (id=${loc.getId()})}" class="btn btn-primary " >Add to planner</a>
+              <input type="hidden" id="selected_location_id" name="selected_location_id" th:value="${loc.getId()}">
+            </td>
+            <td>
+            <form  th:action="@{'/create/trip/locations/{id}' (id=${loc.getId()})}" th:method="GET">
+                <button type="submit"
+                        class="btn btn-sm btn-primary cart-product">
+                  <i class="fa fa-trash">Details</i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<form method="POST" >
+  <div class="bg-modal">
+    <div class="modal-content">
+      <div class="close">
+        +
+      </div>
+      <br>
+      <table class="table">
+        <thead>
+        <tbody>
+        <tr th:each="plan : ${getAllPlanners}">
+          <td th:text="${plan.getName()}" th:value="${plan.getId()}">
+          </td>
+          <td>
+            <a type="submit"
+                    class="btn btn-sm btn-primary cart-product" th:href="@{'/create/planner/{id}' (id=${plan.getId()})}">
+              <i class="fa fa-trash">Save</i>
+            </a>
+            <input type="hidden" id="selected_planner_id" name="selected_planner_id" th:value="${plan.getId()}">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
+</body>
+</html>
