@@ -6,7 +6,6 @@ import { City } from "../_models/city";
 @Injectable({
     providedIn:'root'
 })
-
 export class CityService{
     constructor(private httpClient: HttpClient){
     }

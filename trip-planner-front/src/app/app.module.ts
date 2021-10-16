@@ -1,8 +1,8 @@
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryService } from './_services/cateogry.service';
@@ -21,12 +21,18 @@ import {MatCardModule} from '@angular/material/card';
 import { PlannerService } from './_services/planner.service';
 import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { CreateInitialPlannerComponent } from './create-initial-planner/create-initial-planner.component';
+import { LocationsFormComponent } from './locations-form/locations-form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlannerComponent,
-    LocationComponent
+    LocationComponent,
+    CreateInitialPlannerComponent,
+    LocationsFormComponent
   ],
   imports: [
     BrowserModule,
@@ -43,13 +49,21 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
-    MatGridListModule
+    MatGridListModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatSelectModule
+    
   ],
   providers: [
     CategoryService,
     PlannerService
+    
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]
   
 })
 export class AppModule { }

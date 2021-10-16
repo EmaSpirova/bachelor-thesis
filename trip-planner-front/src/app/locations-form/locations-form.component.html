@@ -1,0 +1,43 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+<form class="example-form">
+  <label><h5>Please select a place</h5></label>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Please select a place</mat-label>
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Place"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <h5>Who are you travelling with?  </h5>
+  <mat-form-field appearance="fill" class="example-full-width">
+    <mat-label>Please select a companion</mat-label>
+    <mat-select [disabled]="disableSelect.value">
+      <mat-option value="option1" *ngFor="let companion of companions">{{companion.type}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h5>How many days are you willing to stay ?</h5>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Please select a number of days</mat-label>
+    <input matInput placeholder="No. Dys"  type="number">
+  </mat-form-field>
+
+   <h5>What are your priorities to visit?</h5> 
+  <mat-chip-list  selectable multiple>
+    <mat-chip #c="matChip" color="accent" selected *ngFor="let category of categories" 
+    (click)="toggleSelection(c)">
+  <mat-icon *ngIf="c.selected">check</mat-icon>
+  {{category.name}}
+  </mat-chip>
+  </mat-chip-list>
+  <button mat-raised-button color="primary">Create my planner</button>
+</form>

@@ -16,14 +16,9 @@ import { CountryService } from '../_services/country.service';
 export class LocationComponent implements OnInit {
 
   categories: Category[];
-  cities: City[];
-  countries:Country[];
   companions: Companion[];
-  constructor(private categoryService: CategoryService, private cityService : CityService,
-            private countryService : CountryService, private companionService : CompanionService) {
+  constructor(private categoryService: CategoryService, private companionService : CompanionService) {
     this.categories = [];
-    this.cities=[];
-    this.countries = [];
     this.companions = [];
    }
    
@@ -32,17 +27,6 @@ export class LocationComponent implements OnInit {
       data => {
         this.categories = data;
         console.log(data);
-      }
-    );
-    this.cityService.getAllCities().subscribe(
-      data => {
-        this.cities = data;
-
-      }
-    );
-    this.countryService.getAllCountries().subscribe(
-      data => {
-        this.countries = data;
       }
     );
 
