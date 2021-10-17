@@ -7,6 +7,7 @@ import finki.diplomska.tripplanner.service.LocationService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -45,6 +46,17 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Optional<Location> findById(Long id) {
         return this.locationRepository.findById(id);
+    }
+
+    @Override
+    public List<Location> findLocations(Long locationId, Long companionId, Long lengthOfStay, String categoryIds) {
+        List<Long> categories = null;
+        if(categoryIds != null && !categoryIds.isEmpty()){
+            List<String> ids = Arrays.asList(categoryIds.split(","));
+            categories = ids.stream().map(Long::valueOf).collect(Collectors.toList());
+        }
+        List<Location> foundLocations = locationRepository.findLocationsFromForm(locationId, companionId, categories);
+        return foundLocations;
     }
 
     @Override

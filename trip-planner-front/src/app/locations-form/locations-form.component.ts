@@ -12,6 +12,9 @@ import { Category } from '../_models/category';
 import { CategoryService } from '../_services/cateogry.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { MatChip } from '@angular/material/chips';
+import { LocationService } from '../_services/location.service';
+import { Region } from '../_models/region';
+import { RegionService } from '../_services/region.service';
 
 @Component({
   selector: 'app-locations-form',
@@ -22,19 +25,34 @@ export class LocationsFormComponent implements OnInit {
 
   myControl = new FormControl();
   cities: City[];
-  countries: Country[];
+  regions: Region[];
   companions: Companion[];
   categories: Category[];
   filteredOptions: Observable<City[]>;
   disableSelect = new FormControl(false);
+  chipsSeletion: number[];
+  categoryIds: string;
+  locationId: number;
+  regionId: number;
+  companionId: number;
+  lengthOfStay: number;
+  cityOption: boolean = false;
+  regionOption: boolean = false;
 
-  constructor(private cityService : CityService, private countryService : CountryService,
-              private companionService : CompanionService, private categoryService : CategoryService){
+  constructor(private cityService : CityService, private regionService: RegionService,
+              private companionService : CompanionService, private categoryService : CategoryService,
+              private locationService: LocationService){
     this.filteredOptions = new Observable<City[]>();
     this.cities = [];
-    this.countries = [];
+    this.regions = [];
     this.companions = [];
     this.categories = [];
+    this.chipsSeletion = [];
+    this.locationId = 0;
+    this.companionId = 0;
+    this.lengthOfStay = 1;
+    this.categoryIds = '';
+    this.regionId = 0;
   }
   
   ngOnInit() :void {
@@ -44,6 +62,18 @@ export class LocationsFormComponent implements OnInit {
       switchMap(val => {
         return this.filter(val || '')
       })       
+    );
+
+    this.cityService.getAllCities().subscribe(
+      data => {
+        this.cities = data;
+      }
+    );
+
+    this.regionService.getAllRegions().subscribe(
+      data => {
+        this.regions = data;
+      }
     );
 
     this.categoryService.getAllCategories().subscribe(
@@ -70,8 +100,37 @@ export class LocationsFormComponent implements OnInit {
   
  }  
 
- toggleSelection(chip: MatChip){
-   chip.toggleSelected();
+ toggleSelection(chip: MatChip, category: Category){
+  chip.toggleSelected();
+  if(this.chipsSeletion.length > 0){
+    if(this.chipsSeletion.indexOf(category.id) <= -1){
+      this.chipsSeletion.push(category.id);
+    }else{
+      const index = this.chipsSeletion.indexOf(category.id);
+      this.chipsSeletion.splice(index, 1);
+    }
+  }else{
+    this.chipsSeletion.push(category.id);
+  }
+  console.log(this.chipsSeletion);
  }
 
+
+ createMyPlanner(){
+   this.categoryIds = this.chipsSeletion.join(',');
+   console.log(this.companionId);
+   this.locationService.getAllPlaces(this.locationId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
+     result => {
+       console.log(result);
+     }
+   );
+ }
+ chooseCityOption(){
+   this.cityOption = true;
+   this.regionOption = false;
+ }
+  chooseRegionOption() {
+    this.regionOption = true;
+    this.cityOption = false;
+  }
 }

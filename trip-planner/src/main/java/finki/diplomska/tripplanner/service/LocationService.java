@@ -14,4 +14,6 @@ public interface LocationService {
     List<Location> findLocationsFromCountry (String locName, String companion,String region, List<String> categories );
     List<Location> scheduleLocations(String locName, String companion,String region, List<String> categories, int numberOfDays);
     Optional<Location> findById(Long id);
+
+    List<Location> findLocations(Long locationId, Long companionId, Long lengthOfStay, String categoryIds);
 }

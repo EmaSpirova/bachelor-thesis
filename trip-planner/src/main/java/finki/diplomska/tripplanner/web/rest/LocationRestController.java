@@ -33,17 +33,17 @@ public class LocationRestController {
                     .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
-    @PostMapping(value = "/trip/locations")
-    public List<Location> allLocationsAfterSubmittedForm(@RequestParam(required = false) String locName,
-                                                         @RequestParam(required = false)  String companion,
-                                                         @RequestParam(required = false) String region,
-                                                         @RequestParam(required = false) List<String> categories,
-                                                         @RequestParam(required = false)  int numberOfDays)  {
-        List<Location> generatedLocations = this.locationService.scheduleLocations(locName, companion, region, categories, numberOfDays);
+    @GetMapping(value = "/trip/locations")
+    public List<Location> allLocationsAfterSubmittedForm(@RequestParam(required = false) Long locationId,
+                                                         @RequestParam(required = false)  Long companionId,
+                                                         @RequestParam(required = false) Long lengthOfStay,
+                                                         @RequestParam(required = false) String categoryIds)  {
+        return this.locationService.findLocations(locationId, companionId, lengthOfStay, categoryIds);
+        /* List<Location> generatedLocations = this.locationService.scheduleLocations(locName, companion, region, categories, numberOfDays);
         if(locName.equals("Macedonia")){
             return generatedLocations;
         }else{
             return generatedLocations;
-        }
+        }*/
     }
 }
