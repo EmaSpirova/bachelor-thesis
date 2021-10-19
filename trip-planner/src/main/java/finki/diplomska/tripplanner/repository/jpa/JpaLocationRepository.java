@@ -45,16 +45,35 @@ public interface JpaLocationRepository extends JpaRepository<Location, Long> {
     List<Location> findLocationsFromCountry(@Param("locName") String ime, @Param("companion") String companion, @Param("region") String region, @Param("categories") List<String> categories);
 
     @Query(value = "SELECT  * FROM locations AS l  " +
-            "LEFT JOIN recommended_companion AS rc ON l.id_location = rc.id_location " +
-            "LEFT JOIN companions AS com ON rc.id_companion = com.id_companion " +
-            "LEFT JOIN locations_belong lb ON l.id_location = lb.id_location " +
-            "LEFT JOIN categories AS cate ON lb.id_category = cate.id_category " +
-            "LEFT JOIN regions AS r" +
-            " ON l.id_region = r.id_region" +
-            " LEFT JOIN cities AS cit" +
-            " ON r.id_region = cit.id_region AND cit.id_city = l.id_city " +
-            "WHERE cit.id_city = :locationId and com.id_companion = :companionId and cate.id_category in (:categories) " +
-            "GROUP BY l.id_location " +
-            "ORDER BY CASE l.priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END", nativeQuery = true)
-    List<Location> findLocationsFromForm(@Param("locationId") Long locationId, @Param("companionId") Long companionId, @Param("categories") List<Long> categories);
+            "LEFT JOIN recommended_companion AS rc " +
+            "ON l.id_location = rc.id_location " +
+            "LEFT JOIN companions AS companion " +
+            "ON rc.id_companion = companion.id_companion " +
+            "LEFT JOIN locations_belong lb " +
+            "ON l.id_location = lb.id_location " +
+            "LEFT JOIN categories AS category " +
+            "ON lb.id_category = category.id_category " +
+            "LEFT JOIN cities AS city " +
+            "ON city.id_city = l.id_city " +
+            "WHERE city.id_city = :cityId and companion.id_companion = :companionId and category.id_category IN (:categoryIds) " +
+            "GROUP BY l.id_location ORDER BY CASE l.priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END", nativeQuery = true)
+    List<Location> findLocationsFromCityForm(@Param("cityId") Long cityId, @Param("companionId") Long companionId, @Param("categoryIds") List<Long> categoryIds);
+
+    @Query(value="SELECT * FROM locations AS location " +
+            "LEFT JOIN recommended_companion AS rc " +
+            "ON location.id_location = rc.id_location " +
+            "LEFT JOIN companions AS companion " +
+            "ON rc.id_companion = companion.id_companion " +
+            "LEFT JOIN locations_belong lb " +
+            "ON location.id_location = lb.id_location " +
+            "LEFT JOIN categories AS category " +
+            "ON lb.id_category = category.id_category " +
+            "LEFT JOIN regions AS region " +
+            "ON location.id_region = region.id_region " +
+            "LEFT JOIN cities AS city " +
+            "ON region.id_region  = city.id_region " +
+            "AND city.id_city = location.id_city " +
+            "WHERE region.id_region = :regionId AND companion.id_companion  = :companionId AND category.id_category  IN (:categoryIds) " +
+            "GROUP BY location.id_location ORDER BY CASE location.priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END", nativeQuery = true)
+    List<Location> findLocationsFromRegionForm(@Param("regionId") Long regionId, @Param("companionId") Long companionId, @Param("categoryIds") List<Long> categoryIds);
 }

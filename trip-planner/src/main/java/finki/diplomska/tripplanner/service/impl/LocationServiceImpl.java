@@ -49,15 +49,64 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<Location> findLocations(Long locationId, Long companionId, Long lengthOfStay, String categoryIds) {
+    public List<Location> findLocationsFromCityForm(Long cityId, Long companionId, Long lengthOfStay, String categoryIds) {
         List<Long> categories = null;
         if(categoryIds != null && !categoryIds.isEmpty()){
             List<String> ids = Arrays.asList(categoryIds.split(","));
             categories = ids.stream().map(Long::valueOf).collect(Collectors.toList());
         }
-        List<Location> foundLocations = locationRepository.findLocationsFromForm(locationId, companionId, categories);
-        return foundLocations;
+        Long maxMinutesPerDay = lengthOfStay *6 * 60;
+        int minutesPerDay = 0;
+        List<Location> citylocations = this.locationRepository.findLocationsFromCityForm(cityId, companionId, categories);
+        List<Location> newList = new ArrayList<>();
+        int listSize = citylocations.size();
+
+        while(minutesPerDay < maxMinutesPerDay ){
+            for(Location l: citylocations) {
+                if (minutesPerDay < maxMinutesPerDay && l.getDuration() + minutesPerDay <= maxMinutesPerDay && listSize != 0) {
+                    newList.add(l);
+                    listSize --;
+                }
+                minutesPerDay += l.getDuration();
+                if (minutesPerDay > maxMinutesPerDay) {
+                    break;
+                }
+            }
+        }
+
+        List<Location> foundLocations = locationRepository.findLocationsFromCityForm(cityId, companionId, categories);
+        return newList;
     }
+
+    @Override
+    public List<Location> findLocationsFromRegionForm(Long regionId, Long companionId, Long lengthOfStay, String categoryIds) {
+        List<Long> categories = null;
+        if(categoryIds != null && !categoryIds.isEmpty()){
+            List<String> ids = Arrays.asList(categoryIds.split(","));
+            categories = ids.stream().map(Long::valueOf).collect(Collectors.toList());
+        }
+        Long maxMinutesPerDay = lengthOfStay *6 * 60;
+        int minutesPerDay = 0;
+        List<Location> countryLocations = this.locationRepository.findLocationsFromRegionForm(regionId, companionId, categories);
+        List<Location> newList = new ArrayList<>();
+        int listCountrySize = countryLocations.size();
+
+            while(minutesPerDay < maxMinutesPerDay){
+                for(Location l: countryLocations) {
+                    if (minutesPerDay < maxMinutesPerDay && l.getDuration() + minutesPerDay <= maxMinutesPerDay && listCountrySize != 0) {
+                        newList.add(l);
+                        listCountrySize --;
+                    }
+                    minutesPerDay += l.getDuration();
+                    if (minutesPerDay > maxMinutesPerDay) {
+                        break;
+                    }
+                }
+
+        }
+        return newList;
+    }
+
 
     @Override
     public List<Location> scheduleLocations(String locName, String companion, String region, List<String> categories, int numberOfDays) {

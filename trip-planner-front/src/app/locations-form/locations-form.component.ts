@@ -34,10 +34,13 @@ export class LocationsFormComponent implements OnInit {
   categoryIds: string;
   locationId: number;
   regionId: number;
+  cityId: number;
   companionId: number;
   lengthOfStay: number;
   cityOption: boolean = false;
   regionOption: boolean = false;
+  value:number;
+  max: number;
 
   constructor(private cityService : CityService, private regionService: RegionService,
               private companionService : CompanionService, private categoryService : CategoryService,
@@ -53,6 +56,9 @@ export class LocationsFormComponent implements OnInit {
     this.lengthOfStay = 1;
     this.categoryIds = '';
     this.regionId = 0;
+    this.cityId = 0;
+    this.value = 0;
+    this.max = 30;
   }
   
   ngOnInit() :void {
@@ -118,12 +124,24 @@ export class LocationsFormComponent implements OnInit {
 
  createMyPlanner(){
    this.categoryIds = this.chipsSeletion.join(',');
-   console.log(this.companionId);
-   this.locationService.getAllPlaces(this.locationId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
-     result => {
-       console.log(result);
-     }
-   );
+   console.log(this.categoryIds);
+   
+   if(this.cityOption){
+    this.locationService.getLocationsFromCity(this.cityId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
+      result => {
+        console.log(result);
+      }
+    );
+   }else if(this.regionOption){
+ 
+    this.locationService.getLocationsFromRegion(this.regionId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
+      result => {
+        console.log(result);
+      }
+    );
+   }
+   
+  
  }
  chooseCityOption(){
    this.cityOption = true;
@@ -132,5 +150,11 @@ export class LocationsFormComponent implements OnInit {
   chooseRegionOption() {
     this.regionOption = true;
     this.cityOption = false;
+  }
+
+  constraintMaxNumberDays(){
+     if(this.value > this.max){
+       this.value = this.max;
+     }
   }
 }

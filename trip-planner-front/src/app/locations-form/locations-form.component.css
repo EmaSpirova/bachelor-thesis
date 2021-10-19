@@ -17,3 +17,7 @@ mat-icon {
 button{
   float: right;
 }
+
+.colorClass{
+  color:yellow;
+}

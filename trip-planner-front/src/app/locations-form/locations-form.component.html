@@ -2,7 +2,7 @@
 
 <div class="example-form">
 
-  <div class="d-block">
+  <div class="form-group">
     <button class="btn" (click)="chooseCityOption()" >
       City
     </button>
@@ -34,11 +34,12 @@
     <label><h5>Please select a city</h5></label>
     <mat-form-field appearance="fill" class="example-full-width">
       <mat-label>Please select a city</mat-label>
-      <mat-select [(ngModel)]="locationId" placeholder="Select city">
+      <mat-select [(ngModel)]="cityId" placeholder="Select city">
         <mat-option [value]="city.id" *ngFor="let city of cities" [value]="city.id"> {{city.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
+
 
   <div *ngIf="regionOption">
     <label><h5>Please select a region</h5></label>
@@ -61,19 +62,19 @@
   <h5>How many days are you willing to stay ?</h5>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Please select a number of days</mat-label>
-    <input matInput placeholder="No. Days"  type="number" [(ngModel)]="lengthOfStay">
+    <input matInput placeholder="No. Days"  type="number" min="1" value="0" max="30" [constraintMaxNumberDays()] [(ngModel)]="lengthOfStay">
   </mat-form-field>
 
    <h5>What are your priorities to visit?</h5> 
   <mat-chip-list  selectable multiple>
     <mat-chip #c="matChip" selected *ngFor="let category of categories" 
-    (click)="toggleSelection(c, category)" >
+    (click)="toggleSelection(c, category)">
   <mat-icon *ngIf="!c.selected" >check</mat-icon>
   {{category.name}}
   </mat-chip>
   </mat-chip-list>
+  <br>
   <button mat-raised-button color="primary" (click)="createMyPlanner()">Create my planner</button>
-
 
 </div>
   

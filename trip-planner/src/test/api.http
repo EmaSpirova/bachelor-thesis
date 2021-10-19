@@ -29,10 +29,10 @@ GET http://localhost:8080/api/planners
 GET http://localhost:8080/api/planner/1
 
 ###
-GET http://localhost:8080/api/trip/locations
-Content-Type: application/x-www-form-urlencoded
+GET http://localhost:8080/api/city/locations?cityId=1&companionId=1&lengthOfStay=1&categoryIds=1,2
 
-locName=Macedonia&companion=Wandering Solo&region=Skopje Region&categories=sightseeing&numberOfDays=1
+###
+GET http://localhost:8080/api/region/locations?regionId=1&companionId=1&lengthOfStay=1&categoryIds=1,2
 
 ###
 GET http://localhost:8080/api/companions
