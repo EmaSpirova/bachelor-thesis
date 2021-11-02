@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import {map, startWith, switchMap} from 'rxjs/operators';
 import {forkJoin, Observable} from 'rxjs';
 import { CityService } from '../_services/city.service';
@@ -41,6 +41,8 @@ export class LocationsFormComponent implements OnInit {
   regionOption: boolean = false;
   value:number;
   max: number;
+  toggle = true;
+  status = 'Enable';
 
   constructor(private cityService : CityService, private regionService: RegionService,
               private companionService : CompanionService, private categoryService : CategoryService,
@@ -108,6 +110,7 @@ export class LocationsFormComponent implements OnInit {
 
  toggleSelection(chip: MatChip, category: Category){
   chip.toggleSelected();
+  
   if(this.chipsSeletion.length > 0){
     if(this.chipsSeletion.indexOf(category.id) <= -1){
       this.chipsSeletion.push(category.id);
@@ -140,9 +143,8 @@ export class LocationsFormComponent implements OnInit {
       }
     );
    }
-   
-  
  }
+ 
  chooseCityOption(){
    this.cityOption = true;
    this.regionOption = false;
@@ -157,4 +159,5 @@ export class LocationsFormComponent implements OnInit {
        this.value = this.max;
      }
   }
+
 }

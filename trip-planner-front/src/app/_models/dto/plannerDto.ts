@@ -1,11 +1,11 @@
-export class Planner{
-    id: number;
+export class PlannerDto{
     name: string;
     description: string;
+    locationList: any[];
 
     constructor(){
-        this.id = 1;
         this.name = '';
         this.description = '';
+        this.locationList = [];
     }
 }

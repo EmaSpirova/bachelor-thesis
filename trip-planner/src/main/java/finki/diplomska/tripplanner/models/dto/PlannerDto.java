@@ -1,6 +1,5 @@
 package finki.diplomska.tripplanner.models.dto;
 
-import finki.diplomska.tripplanner.models.Location;
 import lombok.Data;
 
 import java.util.List;

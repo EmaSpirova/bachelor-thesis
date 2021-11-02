@@ -50,13 +50,16 @@ public class PlannerServiceImpl implements PlannerService {
 
     @Override
     public Optional<Planner> newPlanner(PlannerDto plannerDto) {
+        /*
         List<Location> locationList  = new ArrayList<>();
         for(Long location : plannerDto.getLocationList()){
             Location loc = this.locationRepository.findById(location)
                     .orElseThrow(() -> new LocationNotFoundException(location));
             locationList.add(loc);
         }
-        return Optional.of(this.plannerRepository.save(new Planner(plannerDto.getName(), plannerDto.getDescription(),  locationList)));
+
+         */
+           return Optional.of(this.plannerRepository.save(new Planner(plannerDto.getName(), plannerDto.getDescription(), null)));
     }
 
     @Override

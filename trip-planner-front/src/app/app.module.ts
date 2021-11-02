@@ -25,6 +25,8 @@ import { CreateInitialPlannerComponent } from './create-initial-planner/create-i
 import { LocationsFormComponent } from './locations-form/locations-form.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { EditPlannerComponent } from './planner/edit-planner/edit-planner.component';
+import { DetailPlannerComponent } from './planner/detail-planner/detail-planner.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +34,10 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     PlannerComponent,
     LocationComponent,
     CreateInitialPlannerComponent,
-    LocationsFormComponent
-  ],
+    LocationsFormComponent,
+    EditPlannerComponent,
+    DetailPlannerComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -3,6 +3,7 @@ import { Planner } from '../_models/planner';
 import { PlannerService } from '../_services/planner.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CreateInitialPlannerComponent } from '../create-initial-planner/create-initial-planner.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,8 +14,11 @@ import { CreateInitialPlannerComponent } from '../create-initial-planner/create-
 export class PlannerComponent implements OnInit {
 
   planners: Planner[];
-  constructor(private plannerService: PlannerService, public dialog: MatDialog) { 
+  plannerId: number;
+
+  constructor(private plannerService: PlannerService, public dialog: MatDialog, private router: Router) { 
     this.planners = [];
+    this.plannerId = 1;
   };
  
   openDialog(): void {
@@ -32,4 +36,11 @@ export class PlannerComponent implements OnInit {
     );
   }
   
+  onClickEditPlanner(id: number){
+    console.log(id);
+   
+         
+          this.router.navigate(['edit/planner/', this.plannerId])
+    
+  }
 }

@@ -14,7 +14,7 @@ description=Fourth Planner Description&name=Fourth Planner&locationList=
 POST http://localhost:8080/api/planner/new
 Content-Type: application/json
 
-{"name": "Sixth Planner Check", "description": "First Planner Description", "locationList" : []}
+{"name": "Second Planner Check", "description": "Second Planner Description", "locationList" : []}
 
 ###
 PUT http://localhost:8080/api/edit/planner/6

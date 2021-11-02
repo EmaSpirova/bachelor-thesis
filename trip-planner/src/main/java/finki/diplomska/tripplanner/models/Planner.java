@@ -1,6 +1,7 @@
 package finki.diplomska.tripplanner.models;
 
 import lombok.*;
+import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
 import java.util.List;

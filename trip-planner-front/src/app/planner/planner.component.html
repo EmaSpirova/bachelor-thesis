@@ -1,15 +1,16 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
 <button mat-raised-button (click)="openDialog()">Create initial planner</button>
 
-<mat-grid-list cols="4" rowHeight="250px">
-  <mat-grid-tile *ngFor="let planner of planners" >
-      <mat-card class="example-card" >
+<mat-grid-list cols="4" >
+  <mat-grid-tile *ngFor="let planner of planners">
+      <mat-card class="d-flex flex-column">
         <mat-card-title>{{planner.name}}</mat-card-title>
         <mat-card-content>
           {{planner.description}}
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">
+        <mat-card-actions class="mt-auto">
+          <button mat-raised-button color="primary" (click)="onClickEditPlanner(planner.id)">
             <mat-icon>edit</mat-icon> Edit
           </button>
           

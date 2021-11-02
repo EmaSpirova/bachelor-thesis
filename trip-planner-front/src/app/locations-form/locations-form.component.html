@@ -66,9 +66,9 @@
   </mat-form-field>
 
    <h5>What are your priorities to visit?</h5> 
-  <mat-chip-list  selectable multiple>
+  <mat-chip-list  selectable multiple >
     <mat-chip #c="matChip" selected *ngFor="let category of categories" 
-    (click)="toggleSelection(c, category)">
+    (click)="toggleSelection(c, category)" [ngClass]="{'yellow' : toggle}">
   <mat-icon *ngIf="!c.selected" >check</mat-icon>
   {{category.name}}
   </mat-chip>

@@ -18,6 +18,6 @@ button{
   float: right;
 }
 
-.colorClass{
-  color:yellow;
+.yellow{
+  background-color:yellow;
 }
