@@ -15,25 +15,11 @@ import { CountryService } from '../_services/country.service';
 })
 export class LocationComponent implements OnInit {
 
-  categories: Category[];
-  companions: Companion[];
-  constructor(private categoryService: CategoryService, private companionService : CompanionService) {
-    this.categories = [];
-    this.companions = [];
+  constructor() {
+    
    }
    
   ngOnInit(): void {
-    this.categoryService.getAllCategories().subscribe(
-      data => {
-        this.categories = data;
-        console.log(data);
-      }
-    );
-
-    this.companionService.getAllCompanions().subscribe(
-      data => {
-        this.companions = data;
-      }
-    );
+   
   }
 }

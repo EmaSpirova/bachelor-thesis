@@ -3,11 +3,11 @@
   <div mat-dialog-content>
     <p>Planner name</p>
     <mat-form-field appearance="fill">
-      <input matInput required   type="text" [(ngModel)]="plannerDto.name" name="name" placeholder="Planner name">
+      <input matInput required   type="text" [(ngModel)]="planner.name" name="name" placeholder="Planner name">
     </mat-form-field>
     <p>Planner description</p>
     <mat-form-field appearance="fill">
-      <textarea matInput required name="description" [(ngModel)]="plannerDto.description" type="text" placeholder="Planner description"></textarea>
+      <textarea matInput required name="description" [(ngModel)]="planner.description" type="text" placeholder="Planner description"></textarea>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>

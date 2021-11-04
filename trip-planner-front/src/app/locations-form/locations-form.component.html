@@ -12,23 +12,6 @@
   </div>
   <br>
   <br>
-  <!--
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Please select a place</mat-label>
-    <input type="text"
-           placeholder="Pick one"
-           aria-label="Place"
-           matInput
-           [formControl]="myControl"
-           [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
-        {{option.name}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  -->
-
 
   <div *ngIf="cityOption">
     <label><h5>Please select a city</h5></label>
@@ -39,7 +22,6 @@
       </mat-select>
     </mat-form-field>
   </div>
-
 
   <div *ngIf="regionOption">
     <label><h5>Please select a region</h5></label>

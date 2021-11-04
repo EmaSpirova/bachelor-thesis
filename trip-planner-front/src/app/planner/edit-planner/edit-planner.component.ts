@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PlannerDto } from 'src/app/_models/dto/plannerDto';
 import { Planner } from 'src/app/_models/planner';
+import { PlannerService } from 'src/app/_services/planner.service';
 
 @Component({
   selector: 'app-edit-planner',
@@ -10,21 +13,58 @@ import { Planner } from 'src/app/_models/planner';
 export class EditPlannerComponent implements OnInit {
 
   planner: Planner;
+  planners: Planner[];
+  form: FormGroup;
+  plannerDto: PlannerDto;
+  id: number;
 
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private route: ActivatedRoute ,private fb: FormBuilder, private plannerService: PlannerService) { 
     this.planner = new Planner();
+    this.planners = [];
+    this.form = fb.group({
+      title: fb.control('initial value', Validators.required)
+  });
+    this.plannerDto = new PlannerDto();
+    this.id = 1;
   }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
+
+    this.form = this.fb.group({
+        name: [''],
+        description: [''],
+        locationList: []
+    });
+
+    this.plannerService.getPlannerById(this.id)
+    .pipe()
+    .subscribe(x => this.form.patchValue(x));
   }
 
 
-  onClickSavePlanner(){
-      this.router.navigate(['planners']);
+  onSubmit(){
+    this.updatePlanner();
+      
   }
 
-  onClickAddLocation(){
+  onClickAddLocation()
+  {
     this.router.navigate(['form']);
   }
+
+  private updatePlanner() {
+    this.plannerService.updatePlanner(this.id, this.form.value)
+        .pipe()
+        .subscribe({
+            next: () => {
+              this.router.navigate(['planners']);
+            },
+            error: error => {
+                console.log("error");
+            }
+        });
+}
+  
 }

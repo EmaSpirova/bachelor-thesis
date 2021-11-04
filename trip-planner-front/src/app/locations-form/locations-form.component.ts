@@ -15,6 +15,7 @@ import { MatChip } from '@angular/material/chips';
 import { LocationService } from '../_services/location.service';
 import { Region } from '../_models/region';
 import { RegionService } from '../_services/region.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-locations-form',
@@ -46,7 +47,7 @@ export class LocationsFormComponent implements OnInit {
 
   constructor(private cityService : CityService, private regionService: RegionService,
               private companionService : CompanionService, private categoryService : CategoryService,
-              private locationService: LocationService){
+              private locationService: LocationService, private router : Router){
     this.filteredOptions = new Observable<City[]>();
     this.cities = [];
     this.regions = [];
@@ -98,66 +99,70 @@ export class LocationsFormComponent implements OnInit {
   }
   
   filter(val: string): Observable<City[]> {
-  // call the service which makes the http-request
+    // call the service which makes the http-request
     return this.cityService.getAllCities()
-    .pipe(
-    map(response => response.filter(option => { 
-      return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
-    }))
-  )
-  
- }  
+      .pipe(
+        map(response => response.filter(option => {
+          return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
+        }))
+      )
+
+  }
 
  toggleSelection(chip: MatChip, category: Category){
   chip.toggleSelected();
   
-  if(this.chipsSeletion.length > 0){
-    if(this.chipsSeletion.indexOf(category.id) <= -1){
-      this.chipsSeletion.push(category.id);
-    }else{
-      const index = this.chipsSeletion.indexOf(category.id);
-      this.chipsSeletion.splice(index, 1);
-    }
-  }else{
-    this.chipsSeletion.push(category.id);
-  }
-  console.log(this.chipsSeletion);
- }
-
-
- createMyPlanner(){
-   this.categoryIds = this.chipsSeletion.join(',');
-   console.log(this.categoryIds);
-   
-   if(this.cityOption){
-    this.locationService.getLocationsFromCity(this.cityId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
-      result => {
-        console.log(result);
-      }
-    );
-   }else if(this.regionOption){
- 
-    this.locationService.getLocationsFromRegion(this.regionId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
-      result => {
-        console.log(result);
-      }
-    );
+   if (this.chipsSeletion.length > 0) {
+     if (this.chipsSeletion.indexOf(category.id) <= -1) {
+       this.chipsSeletion.push(category.id);
+     } else {
+       const index = this.chipsSeletion.indexOf(category.id);
+       this.chipsSeletion.splice(index, 1);
+     }
+   } else {
+     this.chipsSeletion.push(category.id);
    }
+   console.log(this.chipsSeletion);
  }
- 
- chooseCityOption(){
-   this.cityOption = true;
-   this.regionOption = false;
- }
+
+
+  createMyPlanner() {
+    this.categoryIds = this.chipsSeletion.join(',');
+    console.log(this.categoryIds);
+
+    if (this.cityOption) {
+      this.locationService.getLocationsFromCity(this.cityId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
+        result => {
+          console.log(result);
+          this.router.navigate(['locations']);
+        }
+      );
+    } else if (this.regionOption) {
+      this.locationService.getLocationsFromRegion(this.regionId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
+        result => {
+          console.log(result);
+          this.router.navigate(['locations']);
+        }
+      );
+    }
+
+
+
+  }
+
+  chooseCityOption() {
+    this.cityOption = true;
+    this.regionOption = false;
+  }
   chooseRegionOption() {
     this.regionOption = true;
     this.cityOption = false;
   }
 
-  constraintMaxNumberDays(){
-     if(this.value > this.max){
-       this.value = this.max;
-     }
+  constraintMaxNumberDays() {
+    if (this.value > this.max) {
+      this.value = this.max;
+    }
   }
 
 }

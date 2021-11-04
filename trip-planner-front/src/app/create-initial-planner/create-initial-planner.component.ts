@@ -39,7 +39,7 @@ export class CreateInitialPlannerComponent implements OnInit {
   
   onFormSubmitPlanner(form: NgForm){
    console.log(this.planner);
-      this.plannerService.postInitialPlanner(this.plannerDto).subscribe(
+      this.plannerService.postInitialPlanner(this.planner, this.locations).subscribe(
         data=>{
           console.log(data);
           this.router.navigate(['planner']);

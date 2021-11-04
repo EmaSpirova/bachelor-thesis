@@ -15,13 +15,18 @@ export class PlannerService{
         return this.httpClient.get<Planner[]>(url);
     }
 
-    postInitialPlanner(plannerDto: PlannerDto): Observable<Object>{     
+    postInitialPlanner(planner: Planner, locationList: Location[]): Observable<Object>{     
         let url = "http://localhost:8080/api/planner/new";
-        return this.httpClient.post<Planner>(url, plannerDto);
+        return this.httpClient.post<Planner>(url, planner);
     }
 
-    updatePlanner(id: number):Observable<Planner>{    
+    updatePlanner(id: number, plannerDto : PlannerDto):Observable<Planner>{    
     let url = "http://localhost:8080/api/edit/planner/" + id;
-    return this.httpClient.put<Planner>(url, null);
+    return this.httpClient.put<Planner>(url, plannerDto);
+    }
+
+    getPlannerById(id:number):Observable<Planner>{
+        let url = "http://localhost:8080/api/planner/" + id;
+        return this.httpClient.get<Planner>(url);
     }
 }

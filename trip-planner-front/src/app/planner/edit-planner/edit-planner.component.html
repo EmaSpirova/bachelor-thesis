@@ -2,15 +2,15 @@
 
 <h3>Here you can edit your planner</h3>
 
-<form>
+<form [formGroup] = "form" (ngSubmit)="onSubmit()">
     <div class="form-gorup">
         <p>Planner name</p>
         <mat-form-field appearance="fill">
-          <input matInput required   type="text" name="name"  placeholder="Planner name">
+          <input matInput required type="text" formControlName="name"  placeholder="Planner name">
         </mat-form-field>
         <p>Planner description</p>
         <mat-form-field appearance="fill">
-          <textarea matInput required name="description"  type="text" placeholder="Planner description"></textarea>
+          <textarea matInput required formControlName="description"  type="text" placeholder="Planner description"></textarea>
         </mat-form-field>
     </div>
     <div class="container mb-4" >
@@ -24,8 +24,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            
+                        <tr>                           
                             <td> <button mat-raised-button color="primary" (click)="onClickAddLocation()">
                                  Add locations
                               </button>
@@ -37,7 +36,7 @@
             </div>
         </div>
     </div>
-    <button mat-raised-button color="primary" (click)="onClickSavePlanner()">
+    <button mat-raised-button color="primary" >
         <mat-icon>edit</mat-icon> Save
       </button>
 </form>

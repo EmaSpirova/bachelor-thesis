@@ -4,6 +4,8 @@ import { PlannerService } from '../_services/planner.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CreateInitialPlannerComponent } from '../create-initial-planner/create-initial-planner.component';
 import { Router } from '@angular/router';
+import { PlannerDto } from '../_models/dto/plannerDto';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -14,11 +16,18 @@ import { Router } from '@angular/router';
 export class PlannerComponent implements OnInit {
 
   planners: Planner[];
-  plannerId: number;
+  plannerDto: PlannerDto;
+  editForm: FormGroup;
 
-  constructor(private plannerService: PlannerService, public dialog: MatDialog, private router: Router) { 
+
+
+  constructor(private plannerService: PlannerService, public dialog: MatDialog, private router: Router,
+    private fb : FormBuilder) { 
     this.planners = [];
-    this.plannerId = 1;
+    this.plannerDto = new PlannerDto();
+    this.editForm = fb.group({
+      title: fb.control('initial value', Validators.required)
+  });
   };
  
   openDialog(): void {
@@ -36,11 +45,16 @@ export class PlannerComponent implements OnInit {
     );
   }
   
-  onClickEditPlanner(id: number){
+  onClickEditPlannerGet(id: number){
     console.log(id);
-   
-         
-          this.router.navigate(['edit/planner/', this.plannerId])
+        this.plannerService.getPlannerById(id).subscribe(
+            data => {
+              
+              this.router.navigate(['edit/planner/', id])
+            }
+     );
     
   }
+
+  
 }
