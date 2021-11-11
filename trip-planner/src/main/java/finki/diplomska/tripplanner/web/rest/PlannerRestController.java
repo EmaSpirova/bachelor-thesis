@@ -70,8 +70,5 @@ public class PlannerRestController {
                 .orElseGet(()-> ResponseEntity.badRequest().build());
     }
 
-    @PutMapping(value = "/add-location")
-    public Planner addLocationToPlanner(@RequestParam Long lid, @RequestParam Long pid){
-        return this.plannerService.addLocationToPlanner(lid, pid);
-    }
+
 }

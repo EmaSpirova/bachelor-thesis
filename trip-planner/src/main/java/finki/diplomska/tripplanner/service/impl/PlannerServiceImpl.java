@@ -21,12 +21,10 @@ public class PlannerServiceImpl implements PlannerService {
 
     private final JpaPlannerRepository plannerRepository;
     private final JpaLocationRepository locationRepository;
-    private final LocationService locationService;
 
-    public PlannerServiceImpl(JpaPlannerRepository plannerRepository, JpaLocationRepository locationRepository, LocationService locationService) {
+    public PlannerServiceImpl(JpaPlannerRepository plannerRepository, JpaLocationRepository locationRepository) {
         this.plannerRepository = plannerRepository;
         this.locationRepository = locationRepository;
-        this.locationService = locationService;
     }
 
     @Override
@@ -39,14 +37,6 @@ public class PlannerServiceImpl implements PlannerService {
         return this.plannerRepository.findById(id);
     }
 
-    @Override
-    public Planner addLocationToPlanner(Long plannerId, Long locationId) {
-        Location location = this.locationService.findById(locationId)
-                .orElseThrow(() -> new LocationNotFoundException(locationId));
-        Planner planner = this.plannerRepository.getById(plannerId);
-        planner.getLocationList().add(location);
-        return this.plannerRepository.save(planner);
-    }
 
     @Override
     public Optional<Planner> newPlanner(PlannerDto plannerDto) {
@@ -83,7 +73,7 @@ public class PlannerServiceImpl implements PlannerService {
 
         planner.setName(plannerDto.getName());
         planner.setDescription(plannerDto.getDescription());
-
+/*
         List<Location> locationList  = new ArrayList<>();
         for(Long location : plannerDto.getLocationList()){
             Location loc = this.locationRepository.findById(location)
@@ -91,6 +81,8 @@ public class PlannerServiceImpl implements PlannerService {
             locationList.add(loc);
         }
         planner.setLocationList(locationList);
+
+ */
         return Optional.of(this.plannerRepository.save(planner));
     }
 

@@ -8,14 +8,16 @@ import { Planner } from "../_models/planner";
     providedIn: 'root'
 })
 export class PlannerService{
+    
     constructor(private httpClient: HttpClient){
     }
+
     getAllPlanners():Observable<Planner[]>{
         let url = "http://localhost:8080/api/planners";
         return this.httpClient.get<Planner[]>(url);
     }
 
-    postInitialPlanner(planner: Planner, locationList: Location[]): Observable<Object>{     
+    postInitialPlanner(planner: Planner): Observable<Object>{     
         let url = "http://localhost:8080/api/planner/new";
         return this.httpClient.post<Planner>(url, planner);
     }
@@ -29,4 +31,6 @@ export class PlannerService{
         let url = "http://localhost:8080/api/planner/" + id;
         return this.httpClient.get<Planner>(url);
     }
+
+
 }

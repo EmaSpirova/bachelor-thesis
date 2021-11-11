@@ -76,4 +76,10 @@ public interface JpaLocationRepository extends JpaRepository<Location, Long> {
             "WHERE region.id_region = :regionId AND companion.id_companion  = :companionId AND category.id_category  IN (:categoryIds) " +
             "GROUP BY location.id_location ORDER BY CASE location.priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END", nativeQuery = true)
     List<Location> findLocationsFromRegionForm(@Param("regionId") Long regionId, @Param("companionId") Long companionId, @Param("categoryIds") List<Long> categoryIds);
+
+    @Query(value = "SELECT * " +
+            "FROM locations AS l " +
+            "WHERE l.id_location IN " +
+            "(SELECT pl.id_location FROM planners_contain AS pl WHERE pl.id_planner = :plannerId)", nativeQuery = true)
+    List<Location> getAllLocationsForPlanner(@Param("plannerId") Long plannerId);
 }

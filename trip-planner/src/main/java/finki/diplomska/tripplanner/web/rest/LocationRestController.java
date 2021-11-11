@@ -1,6 +1,7 @@
 package finki.diplomska.tripplanner.web.rest;
 
 import finki.diplomska.tripplanner.models.Location;
+import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 import finki.diplomska.tripplanner.service.LocationService;
 import finki.diplomska.tripplanner.service.PlannerService;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +49,15 @@ public class LocationRestController {
                                                     @RequestParam(required = false) Long lengthOfStay,
                                                     @RequestParam(required = false) String categoryIds){
         return this.locationService.findLocationsFromRegionForm(regionId, companionId,lengthOfStay, categoryIds);
+    }
+
+    @PutMapping(value = "/add-location")
+    public Location addLocationToPlanner(@RequestBody PlannerLocationDto plannerLocationDto){
+        return this.locationService.addLocationToPlanner(plannerLocationDto);
+    }
+
+    @GetMapping(value = "/planner/locations")
+    public List<Location> getAllLocationsForPlanner (@RequestParam Long plannerId){
+        return this.locationService.getAllLocationsForPlanner(plannerId);
     }
 }

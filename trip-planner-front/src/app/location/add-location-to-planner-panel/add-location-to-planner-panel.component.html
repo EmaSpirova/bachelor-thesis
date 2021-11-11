@@ -1,0 +1,15 @@
+<form  >
+    <h1 mat-dialog-title>Please select a planner where u want your location to be saved</h1>
+   
+<table class="table" >
+  <tbody>
+    <tr *ngFor="let planner of planners">
+      <td>{{planner.name}}</td>
+      <td><button mat-raised-button color="primary" (click)="onFormSavePlanner(planner.id)">Save</button></td>
+    </tr>
+   
+  </tbody>
+</table>
+  </form>
+  
+  <button mat-button (click)="onCancelClick()">Cancel</button>

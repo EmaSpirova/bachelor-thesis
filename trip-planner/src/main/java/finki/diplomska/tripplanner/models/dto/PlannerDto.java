@@ -9,11 +9,9 @@ public class PlannerDto {
 
     private String name;
     private String description;
-    private List<Long> locationList;
 
-    public PlannerDto(String name, String description, List<Long> locationList) {
+    public PlannerDto(String name, String description) {
         this.name = name;
         this.description = description;
-        this.locationList = locationList;
     }
 }

@@ -1,8 +1,11 @@
 package finki.diplomska.tripplanner.service.impl;
 
 import finki.diplomska.tripplanner.models.Location;
+import finki.diplomska.tripplanner.models.Planner;
+import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 import finki.diplomska.tripplanner.models.exceptions.LocationNotFoundException;
 import finki.diplomska.tripplanner.repository.jpa.JpaLocationRepository;
+import finki.diplomska.tripplanner.repository.jpa.JpaPlannerRepository;
 import finki.diplomska.tripplanner.service.LocationService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +17,11 @@ import java.util.stream.Collectors;
 public class LocationServiceImpl implements LocationService {
 
     private final JpaLocationRepository locationRepository;
+    private final JpaPlannerRepository plannerRepository;
 
-    public LocationServiceImpl(JpaLocationRepository locationRepository) {
+    public LocationServiceImpl(JpaLocationRepository locationRepository, JpaPlannerRepository plannerRepository) {
         this.locationRepository = locationRepository;
+        this.plannerRepository = plannerRepository;
     }
 
     @Override
@@ -148,5 +153,20 @@ public class LocationServiceImpl implements LocationService {
 
         return newList;
     }
+
+    @Override
+    public Location addLocationToPlanner(PlannerLocationDto plannerLocationDto) {
+        Location location = this.locationRepository.findById(plannerLocationDto.getLocationId())
+                .orElseThrow(() -> new LocationNotFoundException(plannerLocationDto.getLocationId()));
+        Planner planner = this.plannerRepository.getById(plannerLocationDto.getPlannerId());
+        planner.getLocationList().add(location);
+        return this.locationRepository.save(location);
+    }
+
+    @Override
+    public List<Location> getAllLocationsForPlanner(Long plannerId) {
+        return this.locationRepository.getAllLocationsForPlanner(plannerId);
+    }
+
 
 }

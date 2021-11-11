@@ -1,62 +1,72 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-<div class="example-form">
 
-  <div class="form-group">
-    <button class="btn" (click)="chooseCityOption()" >
-      City
-    </button>
-    <button class="btn" (click)="chooseRegionOption()">
-      Region
-    </button>
-  </div>
-  <br>
-  <br>
+    <div class="example-form">
 
-  <div *ngIf="cityOption">
-    <label><h5>Please select a city</h5></label>
-    <mat-form-field appearance="fill" class="example-full-width">
-      <mat-label>Please select a city</mat-label>
-      <mat-select [(ngModel)]="cityId" placeholder="Select city">
-        <mat-option [value]="city.id" *ngFor="let city of cities" [value]="city.id"> {{city.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+      <div class="form-group">
+        <button class="btn" (click)="chooseCityOption()">
+          City
+        </button>
+        <button class="btn" (click)="chooseRegionOption()">
+          Region
+        </button>
+      </div>
+      <br>
+      <br>
+  
+      <div *ngIf="cityOption">
+        <label>
+          <h5>Please select a city</h5>
+        </label>
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Please select a city</mat-label>
+          <mat-select [(ngModel)]="cityId" placeholder="Select city" name="city">
+            <mat-option [value]="city.id" *ngFor="let city of cities" > {{city.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div *ngIf="regionOption">
+        <label>
+          <h5>Please select a region</h5>
+        </label>
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Please select a region</mat-label>
+          <mat-select [(ngModel)]="regionId" placeholder="Select region" name="region">
+            <mat-option [value]="region.id" *ngFor="let region of regions" [value]="region.id"> {{region.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <h5>Who are you travelling with? </h5>
+      <mat-form-field appearance="fill" class="example-full-width">
+        <mat-label>Please select a companion</mat-label>
+        <mat-select [(ngModel)]="companionId" placeholder="Please select a companion" name="company">
+          <mat-option [value]="companion.id" *ngFor="let companion of companions">{{companion.type}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <h5>How many days are you willing to stay ?</h5>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Please select a number of days</mat-label>
+        <input matInput placeholder="No. Days" type="number" min="1" value="0" max="30" [constraintMaxNumberDays()]
+          [(ngModel)]="lengthOfStay" name="nomdays" [value] = "lengthOfStay">
+      </mat-form-field>
+  
+      <h5>What are your priorities to visit?</h5>
+      <mat-chip-list selectable multiple>
+        <mat-chip #c="matChip" selected *ngFor="let category of categories" (click)="toggleSelection(c, category)"
+          [ngClass]="{'yellow' : toggle}" name="chips">
+          <mat-icon *ngIf="!c.selected">check</mat-icon>
+          {{category.name}}
+        </mat-chip>
+      </mat-chip-list>
+      <br>
+      <button mat-raised-button color="primary" (click)="createMyPlanner()">Create my planner</button>
+  
+    </div>
 
-  <div *ngIf="regionOption">
-    <label><h5>Please select a region</h5></label>
-    <mat-form-field appearance="fill" class="example-full-width">
-      <mat-label>Please select a region</mat-label>
-      <mat-select [(ngModel)]="regionId" placeholder="Select region">
-        <mat-option [value]="region.id" *ngFor="let region of regions" [value]="region.id"> {{region.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
 
-  <h5>Who are you travelling with?  </h5>
-  <mat-form-field appearance="fill" class="example-full-width">
-    <mat-label>Please select a companion</mat-label>
-    <mat-select [(ngModel)]="companionId" placeholder="Please select a companion">
-      <mat-option [value]="companion.id" *ngFor="let companion of companions">{{companion.type}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <h5>How many days are you willing to stay ?</h5>
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Please select a number of days</mat-label>
-    <input matInput placeholder="No. Days"  type="number" min="1" value="0" max="30" [constraintMaxNumberDays()] [(ngModel)]="lengthOfStay">
-  </mat-form-field>
-
-   <h5>What are your priorities to visit?</h5> 
-  <mat-chip-list  selectable multiple >
-    <mat-chip #c="matChip" selected *ngFor="let category of categories" 
-    (click)="toggleSelection(c, category)" [ngClass]="{'yellow' : toggle}">
-  <mat-icon *ngIf="!c.selected" >check</mat-icon>
-  {{category.name}}
-  </mat-chip>
-  </mat-chip-list>
-  <br>
-  <button mat-raised-button color="primary" (click)="createMyPlanner()">Create my planner</button>
-
-</div>
   

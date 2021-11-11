@@ -17,14 +17,12 @@ export class CreateInitialPlannerComponent implements OnInit {
 
   planner: Planner;
   planners: Planner[];
-  locations : Location[];
   plannerDto: PlannerDto;
 
-  constructor(public dialogRef: MatDialogRef<CreateInitialPlannerComponent>,
+  constructor(private dialogRef: MatDialogRef<CreateInitialPlannerComponent>,
               private plannerService : PlannerService, private router : Router) {
                 this.planner = new Planner;
                 this.planners = [];
-                this.locations = [];
                 this.plannerDto = new PlannerDto();
               }
 
@@ -39,7 +37,7 @@ export class CreateInitialPlannerComponent implements OnInit {
   
   onFormSubmitPlanner(form: NgForm){
    console.log(this.planner);
-      this.plannerService.postInitialPlanner(this.planner, this.locations).subscribe(
+      this.plannerService.postInitialPlanner(this.planner).subscribe(
         data=>{
           console.log(data);
           this.router.navigate(['planner']);

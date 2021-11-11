@@ -51,6 +51,11 @@ GET http://localhost:8080/api/countries
 
 ###
 PUT http://localhost:8080/api/add-location
+Content-Type: application/json
+
+{"plannerId": 1, "locationId": 2}
+
+###
+GET http://localhost:8080/api/planner/locations?plannerId=1
 Content-Type: application/x-www-form-urlencoded
 
-lid=1&pid=1

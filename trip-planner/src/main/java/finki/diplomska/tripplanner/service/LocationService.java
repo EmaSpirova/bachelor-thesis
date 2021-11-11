@@ -2,6 +2,8 @@ package finki.diplomska.tripplanner.service;
 
 
 import finki.diplomska.tripplanner.models.Location;
+import finki.diplomska.tripplanner.models.Planner;
+import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +18,7 @@ public interface LocationService {
     Optional<Location> findById(Long id);
     List<Location> findLocationsFromCityForm(Long cityId, Long companionId, Long lengthOfStay, String categoryIds);
     List<Location> findLocationsFromRegionForm(Long regionId, Long companionId, Long lengthOfStay, String categoryIds);
+    Location addLocationToPlanner(PlannerLocationDto plannerLocationDto);
+    List<Location> getAllLocationsForPlanner(Long plannerId);
+
 }

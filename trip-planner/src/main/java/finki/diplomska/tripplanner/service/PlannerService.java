@@ -13,7 +13,6 @@ public interface PlannerService {
         Optional<Planner> editPlanner(Long id, PlannerDto plannerDto);
         List<Planner> getAllPlaners();
         Optional<Planner> findById(Long id);
-        Planner addLocationToPlanner(Long plannerId, Long locationId);
         Planner editPlannerWithRequestParams(Long id, String description, String name, List<Location> locationList);
         Optional<Planner> newPlanner(PlannerDto plannerDto);
 }

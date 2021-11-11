@@ -21,7 +21,7 @@ export class PlannerComponent implements OnInit {
 
 
 
-  constructor(private plannerService: PlannerService, public dialog: MatDialog, private router: Router,
+  constructor(private plannerService: PlannerService, private dialog: MatDialog, private router: Router,
     private fb : FormBuilder) { 
     this.planners = [];
     this.plannerDto = new PlannerDto();
@@ -48,9 +48,8 @@ export class PlannerComponent implements OnInit {
   onClickEditPlannerGet(id: number){
     console.log(id);
         this.plannerService.getPlannerById(id).subscribe(
-            data => {
-              
-              this.router.navigate(['edit/planner/', id])
+            data => {          
+              this.router.navigate(['edit/planner/', id]);
             }
      );
     

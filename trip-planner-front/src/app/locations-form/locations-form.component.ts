@@ -1,21 +1,21 @@
-import { Component, Injectable, OnInit } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
-import {map, startWith, switchMap} from 'rxjs/operators';
-import {forkJoin, Observable} from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { CityService } from '../_services/city.service';
 import { City } from '../_models/city';
-import { Country } from '../_models/country';
-import { CountryService } from '../_services/country.service';
 import { Companion } from '../_models/companion';
 import { CompanionService } from '../_services/companion.service';
 import { Category } from '../_models/category';
 import { CategoryService } from '../_services/cateogry.service';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { MatChip } from '@angular/material/chips';
 import { LocationService } from '../_services/location.service';
 import { Region } from '../_models/region';
 import { RegionService } from '../_services/region.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Location } from '../_models/location';
+
+
 
 @Component({
   selector: 'app-locations-form',
@@ -40,14 +40,16 @@ export class LocationsFormComponent implements OnInit {
   lengthOfStay: number;
   cityOption: boolean = false;
   regionOption: boolean = false;
-  value:number;
+  value: number;
   max: number;
   toggle = true;
   status = 'Enable';
+  proba: any[];
 
-  constructor(private cityService : CityService, private regionService: RegionService,
-              private companionService : CompanionService, private categoryService : CategoryService,
-              private locationService: LocationService, private router : Router){
+
+  constructor(private cityService: CityService, private regionService: RegionService,
+    private companionService: CompanionService, private categoryService: CategoryService,
+    private locationService: LocationService, private router: Router, private fb: FormBuilder, private route: ActivatedRoute) {
     this.filteredOptions = new Observable<City[]>();
     this.cities = [];
     this.regions = [];
@@ -62,16 +64,18 @@ export class LocationsFormComponent implements OnInit {
     this.cityId = 0;
     this.value = 0;
     this.max = 30;
+    this.proba = [];
   }
+
+  ngOnInit(): void {
   
-  ngOnInit() :void {
     this.filteredOptions = this.myControl.valueChanges
-    .pipe(
-      startWith(''),
-      switchMap(val => {
-        return this.filter(val || '')
-      })       
-    );
+      .pipe(
+        startWith(''),
+        switchMap(val => {
+          return this.filter(val || '')
+        })
+      );
 
     this.cityService.getAllCities().subscribe(
       data => {
@@ -95,9 +99,10 @@ export class LocationsFormComponent implements OnInit {
       data => {
         this.companions = data;
       }
-    )
+    );
+
   }
-  
+
   filter(val: string): Observable<City[]> {
     // call the service which makes the http-request
     return this.cityService.getAllCities()
@@ -106,24 +111,24 @@ export class LocationsFormComponent implements OnInit {
           return option.name.toLowerCase().indexOf(val.toLowerCase()) === 0
         }))
       )
-
   }
 
- toggleSelection(chip: MatChip, category: Category){
-  chip.toggleSelected();
-  
-   if (this.chipsSeletion.length > 0) {
-     if (this.chipsSeletion.indexOf(category.id) <= -1) {
-       this.chipsSeletion.push(category.id);
-     } else {
-       const index = this.chipsSeletion.indexOf(category.id);
-       this.chipsSeletion.splice(index, 1);
-     }
-   } else {
-     this.chipsSeletion.push(category.id);
-   }
-   console.log(this.chipsSeletion);
- }
+  toggleSelection(chip: MatChip, category: Category) {
+    chip.toggleSelected();
+
+    if (this.chipsSeletion.length > 0) {
+      if (this.chipsSeletion.indexOf(category.id) <= -1) {
+        this.chipsSeletion.push(category.id);
+      } else {
+        const index = this.chipsSeletion.indexOf(category.id);
+        this.chipsSeletion.splice(index, 1);
+      }
+    } else {
+      this.chipsSeletion.push(category.id);
+    }
+    console.log(this.chipsSeletion);
+  }
+
 
 
   createMyPlanner() {
@@ -134,20 +139,19 @@ export class LocationsFormComponent implements OnInit {
       this.locationService.getLocationsFromCity(this.cityId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
         result => {
           console.log(result);
-          this.router.navigate(['locations']);
+          this.proba = result;
+          this.router.navigate(['locations'], {queryParams: {cityId: this.cityId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds}});
         }
       );
-    } else if (this.regionOption) {
-      this.locationService.getLocationsFromRegion(this.regionId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
-        result => {
-          console.log(result);
-          this.router.navigate(['locations']);
-        }
-      );
-    }
-
-
-
+    } else
+      if (this.regionOption) {
+        this.locationService.getLocationsFromRegion(this.regionId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
+          result => {
+            console.log(result);
+            this.router.navigate(['locations'], {queryParams: {regionId: this.regionId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds}});
+          }
+        );
+      }
   }
 
   chooseCityOption() {
@@ -164,5 +168,6 @@ export class LocationsFormComponent implements OnInit {
       this.value = this.max;
     }
   }
+
 
 }

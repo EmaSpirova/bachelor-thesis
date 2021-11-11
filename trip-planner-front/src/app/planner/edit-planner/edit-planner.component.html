@@ -27,7 +27,12 @@
                         <tr>                           
                             <td> <button mat-raised-button color="primary" (click)="onClickAddLocation()">
                                  Add locations
-                              </button>
+                                 </button>
+                            </td>
+                        </tr>
+                        <tr *ngFor ="let location of locations">
+                            <td>
+                                {{location.name}}
                             </td>
                         </tr>
                         </tbody>
