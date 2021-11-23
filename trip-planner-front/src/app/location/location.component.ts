@@ -1,9 +1,7 @@
-import { Route } from '@angular/compiler/src/core';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '../_models/location';
 import { LocationService } from '../_services/location.service';
 import { AddLocationToPlannerPanelComponent } from './add-location-to-planner-panel/add-location-to-planner-panel.component';
 
@@ -23,6 +21,7 @@ export class LocationComponent implements OnInit {
   cityOption: boolean = false;
   regionOption: boolean = false;
   regionId: number;
+  locationId: number;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private locationService: LocationService,
     private router: Router, private dialog: MatDialog) {
@@ -35,6 +34,7 @@ export class LocationComponent implements OnInit {
     this.categoryIds = '';
     this.listLocations = [];
     this.regionId = 1;
+    this.locationId = 1;
   }
 
   ngOnInit(): void {
@@ -70,13 +70,17 @@ export class LocationComponent implements OnInit {
 
   }
 
-  openDialogSave(locationId: number){
-    console.log(locationId);
+  openDialogSave(locationId){
+   // console.log(locationId);
       const dialogRef = this.dialog.open(AddLocationToPlannerPanelComponent, {
         width: '250px',
         data: {}
       });
-      this.router.navigate(['locations'], {queryParams: {locationId: locationId}});
+      this.router.navigate(['locations'], {queryParams: {regionId: this.regionId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds, locationId: locationId}});
+      
   }
 
+  onClickSeeDetails(id: number){
+    this.router.navigate(['location'], {queryParams: {id: id}});
+  }
 }

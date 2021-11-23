@@ -168,5 +168,15 @@ public class LocationServiceImpl implements LocationService {
         return this.locationRepository.getAllLocationsForPlanner(plannerId);
     }
 
+    @Override
+    public List<Location> getWeekendGetaways() {
+        return this.locationRepository.getWeekendGetaways();
+    }
+
+    @Override
+    public List<Location> getVillages() {
+        return this.locationRepository.getVillages();
+    }
+
 
 }

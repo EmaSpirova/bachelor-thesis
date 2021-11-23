@@ -1,6 +1,7 @@
 package finki.diplomska.tripplanner.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -69,6 +70,11 @@ public class Location {
             inverseJoinColumns = @JoinColumn(name = "id_category"))
     @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Category> categoryList;
+
+
+    @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Images> imagesList;
 
 
 }

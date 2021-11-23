@@ -25,8 +25,34 @@ export class LocationService{
         return this.httpClient.put<Location>(url, plannerLocationDto);
     }
 
-    getLocationsFroPlanner(plannerId : number) : Observable<Location[]>{
+    getLocationsForPlanner(plannerId : number) : Observable<Location[]>{
         let url = "http://localhost:8080/api/planner/locations";
         return this.httpClient.get<Location[]>(url + '?plannerId=' + plannerId);
     }
+
+    getAllLocations() : Observable<Location[]> {
+        let url = "http://localhost:8080/api/locations";
+        return this.httpClient.get<Location[]>(url);
+    }
+
+    getWeekendGetaways() : Observable<Location[]>{
+        let url = "http://localhost:8080/api/weekend";
+        return this.httpClient.get<Location[]>(url);
+    }
+
+    getVillages() : Observable<Location[]>{
+        let url = "http://localhost:8080/api/villages";
+        return this.httpClient.get<Location[]>(url);
+    }
+
+    getLocation(id : number) :Observable<Location>{
+        let url = "http://localhost:8080/api/location/" + id;
+        return this.httpClient.get<Location>(url);
+    }
+
+    getAllLocationsForPlanner(id: number): Observable<Location[]>{
+        let url = "http://localhost:8080/api/planner/locations";
+        return this.httpClient.get<Location[]>(url + "?plannerId=" + id);
+    }
+    
 }

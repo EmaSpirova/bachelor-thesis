@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PlannerLocationDto } from 'src/app/_models/dto/plannerLocationDto';
@@ -20,6 +19,8 @@ export class AddLocationToPlannerPanelComponent implements OnInit {
   plannerId: number;
   locationId: number;
   plannerLocationDto: PlannerLocationDto;
+  locationsInPlanner: Location[];
+
 
   constructor(private dialogRef: MatDialogRef<AddLocationToPlannerPanelComponent>, private plannerService: PlannerService,
     private locationService: LocationService, private route: ActivatedRoute) {
@@ -28,6 +29,7 @@ export class AddLocationToPlannerPanelComponent implements OnInit {
     this.plannerId = 1;
     this.locationId = 1;
     this.plannerLocationDto = new PlannerLocationDto();
+    this.locationsInPlanner = [];
   }
 
   ngOnInit(): void {
@@ -55,11 +57,15 @@ export class AddLocationToPlannerPanelComponent implements OnInit {
     console.log("LOC ID "+ this.locationId);
     this.plannerLocationDto.locationId = this.locationId;
     this.plannerLocationDto.plannerId = plannerId;
+    /*
     this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
       data => {
         console.log(data);
       }
     );
-  }
+    */
+
+   // window.location.reload();
+    }
 
 }

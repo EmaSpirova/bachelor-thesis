@@ -47,7 +47,7 @@ export class EditPlannerComponent implements OnInit {
       .pipe()
       .subscribe(x => this.form.patchValue(x));
 
-    this.locationService.getLocationsFroPlanner(this.id).subscribe(
+    this.locationService.getLocationsForPlanner(this.id).subscribe(
       data => {
           this.locations = data;
       }

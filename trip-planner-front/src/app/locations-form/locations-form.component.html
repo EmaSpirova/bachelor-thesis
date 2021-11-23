@@ -21,7 +21,7 @@
         </label>
         <mat-form-field appearance="fill" class="example-full-width">
           <mat-label>Please select a city</mat-label>
-          <mat-select [(ngModel)]="cityId" placeholder="Select city" name="city">
+          <mat-select [(ngModel)]="cityId" placeholder="Select city" name="city" >
             <mat-option [value]="city.id" *ngFor="let city of cities" > {{city.name}}</mat-option>
           </mat-select>
         </mat-form-field>

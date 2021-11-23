@@ -1,3 +1,4 @@
+
 export class Location{
     
     id: number;
@@ -6,6 +7,7 @@ export class Location{
     address: string;
     priority: string;
     duration: number;
+    photo: any[];
 
     constructor(){
         this.id = 1;
@@ -14,5 +16,6 @@ export class Location{
         this.address = 'Location addreess';
         this.priority = 'Location priority';
         this.duration = 1;
+        this.photo = [];
     }
 }

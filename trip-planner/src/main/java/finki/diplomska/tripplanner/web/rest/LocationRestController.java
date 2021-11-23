@@ -60,4 +60,14 @@ public class LocationRestController {
     public List<Location> getAllLocationsForPlanner (@RequestParam Long plannerId){
         return this.locationService.getAllLocationsForPlanner(plannerId);
     }
+
+    @GetMapping(value = "weekend")
+    public List<Location> getWeekendGetaways(){
+        return this.locationService.getWeekendGetaways();
+    }
+
+    @GetMapping(value = "villages")
+    public List<Location> getVillages(){
+        return this.locationService.getVillages();
+    }
 }

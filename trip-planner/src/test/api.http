@@ -59,3 +59,14 @@ Content-Type: application/json
 GET http://localhost:8080/api/planner/locations?plannerId=1
 Content-Type: application/x-www-form-urlencoded
 
+###
+GET http://localhost:8080/api/weekend
+Content-Type: application/x-www-form-urlencoded
+
+###
+GET http://localhost:8080/api/villages
+Content-Type: application/x-www-form-urlencoded
+
+###
+GET http://localhost:8080/api/images?locationId=1
+Content-Type: application/x-www-form-urlencoded

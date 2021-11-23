@@ -57,7 +57,7 @@
           <tr th:each="loc : ${countryLocations}" >
             <td th:text="${loc.getName()}" ></td>
             <td th:text="${loc.getId()}"  ></td>
-        <!--    <td><img th:src="*{'data:image/jpeg;base64,'+ imgUtil.getImgData(loc.getPhoto())}" alt="" /></td> -->
+        <td><img th:src="*{'data:image/jpeg;base64,'+ imgUtil.getImgData(loc.getPhoto())}" alt="" /></td>
             <td class="selectedLocation">
               <a th:href="@{'/create/trip/locations/{id}' (id=${loc.getId()})}" class="btn btn-primary " >Add to planner</a>
               <input type="hidden" id="selected_location_id" name="selected_location_id" th:value="${loc.getId()}">

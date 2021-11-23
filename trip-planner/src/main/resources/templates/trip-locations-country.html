@@ -26,7 +26,7 @@
             <td  th:if="${loc.getCity() != null}">
               <span th:text="${loc.getCity().getName()}"/>
             </td>
-            <!--  <td><img th:src="*{'data:image/jpeg;base64,'+ imgUtil.getImgData(loc.getPhoto())}" alt="" /></td> -->
+             <td><img th:src="*{'data:image/jpeg;base64,'+ imgUtil.getImgData(loc.getPhoto())}" alt="" /></td>
 
             <td>
               <form th:action="@{'/trip/locations/{id}' (id=${loc.getId()})}" th:method="GET">

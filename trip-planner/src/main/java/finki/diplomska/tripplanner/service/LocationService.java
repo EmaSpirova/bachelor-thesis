@@ -20,5 +20,6 @@ public interface LocationService {
     List<Location> findLocationsFromRegionForm(Long regionId, Long companionId, Long lengthOfStay, String categoryIds);
     Location addLocationToPlanner(PlannerLocationDto plannerLocationDto);
     List<Location> getAllLocationsForPlanner(Long plannerId);
-
+    List<Location> getWeekendGetaways();
+    List<Location> getVillages();
 }

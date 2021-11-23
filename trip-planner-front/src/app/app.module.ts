@@ -9,7 +9,6 @@ import { CategoryService } from './_services/cateogry.service';
 import { PlannerComponent } from './planner/planner.component';
 import { LocationComponent } from './location/location.component';
 import { MatIconModule } from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatChipsModule} from '@angular/material/chips';
@@ -28,6 +27,15 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EditPlannerComponent } from './planner/edit-planner/edit-planner.component';
 import { DetailPlannerComponent } from './planner/detail-planner/detail-planner.component';
 import { AddLocationToPlannerPanelComponent } from './location/add-location-to-planner-panel/add-location-to-planner-panel.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
+import {MenuItem} from 'primeng/api'; 
+import {CarouselModule} from 'primeng/carousel';
+import {ButtonModule} from 'primeng/button';
+import {ToastModule} from 'primeng/toast';
+import {TabViewModule} from 'primeng/tabview';
+import { LocationDetailsComponent } from './location/location-details/location-details.component';
+import {GalleriaModule} from 'primeng/galleria';
 
 @NgModule({
   declarations: [
@@ -38,7 +46,9 @@ import { AddLocationToPlannerPanelComponent } from './location/add-location-to-p
     LocationsFormComponent,
     EditPlannerComponent,
     DetailPlannerComponent,
-    AddLocationToPlannerPanelComponent
+    AddLocationToPlannerPanelComponent,
+    HomepageComponent,
+    LocationDetailsComponent
     ],
   imports: [
     BrowserModule,
@@ -60,8 +70,13 @@ import { AddLocationToPlannerPanelComponent } from './location/add-location-to-p
     MatAutocompleteModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatSelectModule
-    
+    MatSelectModule,
+    AccordionModule,
+    CarouselModule,
+    ButtonModule,
+    ToastModule,
+    TabViewModule,
+    GalleriaModule
   ],
   providers: [
     CategoryService,
