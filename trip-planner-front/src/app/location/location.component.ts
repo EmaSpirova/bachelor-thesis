@@ -1,18 +1,23 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Planner } from '../_models/planner';
 import { LocationService } from '../_services/location.service';
 import { AddLocationToPlannerPanelComponent } from './add-location-to-planner-panel/add-location-to-planner-panel.component';
+import { Location } from '../_models/location';
+import { PlannerLocationDto } from '../_models/dto/plannerLocationDto';
+
 
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
-  styleUrls: ['./location.component.css']
+  styleUrls: ['./location.component.css'],
+  providers: [DialogService, MessageService]
 })
 export class LocationComponent implements OnInit {
 
-  form: FormGroup;
   categoryIds: string;
   cityId: number;
   companionId: number;
@@ -22,12 +27,13 @@ export class LocationComponent implements OnInit {
   regionOption: boolean = false;
   regionId: number;
   locationId: number;
+  plannerLocationDto: PlannerLocationDto;
+  ref: DynamicDialogRef;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private locationService: LocationService,
-    private router: Router, private dialog: MatDialog) {
-    this.form = fb.group({
-      title: fb.control('initial value', Validators.required)
-    });
+
+
+  constructor(private route: ActivatedRoute, private locationService: LocationService,
+    private router: Router, private dialogService: DialogService, private messageService: MessageService) {
     this.cityId = 1;
     this.companionId = 1;
     this.lengthOfStay = 1;
@@ -35,6 +41,9 @@ export class LocationComponent implements OnInit {
     this.listLocations = [];
     this.regionId = 1;
     this.locationId = 1;
+    this.ref = new DynamicDialogRef;
+    this.plannerLocationDto = new PlannerLocationDto();
+
   }
 
   ngOnInit(): void {
@@ -70,17 +79,42 @@ export class LocationComponent implements OnInit {
 
   }
 
-  openDialogSave(locationId){
-   // console.log(locationId);
-      const dialogRef = this.dialog.open(AddLocationToPlannerPanelComponent, {
-        width: '250px',
-        data: {}
-      });
-      this.router.navigate(['locations'], {queryParams: {regionId: this.regionId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds, locationId: locationId}});
-      
+  onClickSeeDetails(id: number) {
+    this.router.navigate(['location'], { queryParams: { id: id } });
   }
 
-  onClickSeeDetails(id: number){
-    this.router.navigate(['location'], {queryParams: {id: id}});
+  show(location: Location) {
+    this.ref = this.dialogService.open(AddLocationToPlannerPanelComponent, {
+      header: 'Choose a Planner',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000
+    });
+
+    this.ref.onClose.subscribe((planner: Planner) => {
+
+      this.plannerLocationDto.locationId = location.id;
+      this.plannerLocationDto.plannerId = planner.id;
+      console.log("LOC ID: " + this.plannerLocationDto.locationId);
+      console.log("PLANNER ID: " + this.plannerLocationDto.plannerId);
+      this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
+        data => {
+          console.log(data);
+        }
+      );
+      if (planner) {
+        this.messageService.add({ severity: 'success', summary: 'Location ' + location.name +  ' has been added to planner: ' , detail: planner.name });
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
+
+  onClickBackToMyPlanners(){
+    this.router.navigate(['planners']);
   }
 }

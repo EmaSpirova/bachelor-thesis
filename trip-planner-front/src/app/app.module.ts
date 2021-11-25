@@ -2,40 +2,48 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryService } from './_services/cateogry.service';
 import { PlannerComponent } from './planner/planner.component';
 import { LocationComponent } from './location/location.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatCardModule} from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 import { PlannerService } from './_services/planner.service';
 import { MatButtonModule } from '@angular/material/button';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { CreateInitialPlannerComponent } from './create-initial-planner/create-initial-planner.component';
 import { LocationsFormComponent } from './locations-form/locations-form.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EditPlannerComponent } from './planner/edit-planner/edit-planner.component';
 import { DetailPlannerComponent } from './planner/detail-planner/detail-planner.component';
 import { AddLocationToPlannerPanelComponent } from './location/add-location-to-planner-panel/add-location-to-planner-panel.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
-import {MenuItem} from 'primeng/api'; 
-import {CarouselModule} from 'primeng/carousel';
-import {ButtonModule} from 'primeng/button';
-import {ToastModule} from 'primeng/toast';
-import {TabViewModule} from 'primeng/tabview';
+import { AccordionModule } from 'primeng/accordion';     //accordion and accordion tab
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { TabViewModule } from 'primeng/tabview';
 import { LocationDetailsComponent } from './location/location-details/location-details.component';
-import {GalleriaModule} from 'primeng/galleria';
+import { GalleriaModule } from 'primeng/galleria';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { MessageService, SharedModule, ConfirmationService } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import {PaginatorModule} from 'primeng/paginator';
+import {CardModule} from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -49,7 +57,7 @@ import {GalleriaModule} from 'primeng/galleria';
     AddLocationToPlannerPanelComponent,
     HomepageComponent,
     LocationDetailsComponent
-    ],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -76,15 +84,40 @@ import {GalleriaModule} from 'primeng/galleria';
     ButtonModule,
     ToastModule,
     TabViewModule,
-    GalleriaModule
+    GalleriaModule,
+    DynamicDialogModule,
+    MatIconModule,
+    SharedModule,
+    MatDialogModule,
+    TableModule,
+    MessagesModule,
+    MessageModule,
+    InputTextModule,
+    RippleModule,
+    FormsModule,
+    PaginatorModule,
+    CardModule
   ],
+
+
   providers: [
     CategoryService,
-    PlannerService
-    
+    PlannerService,
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    DialogService,
+    MessageService,
+    ConfirmationService
+
+  ],
+  
+  entryComponents: [
+    AddLocationToPlannerPanelComponent
   ],
   bootstrap: [AppComponent],
-  schemas: [NO_ERRORS_SCHEMA]
-  
+  schemas: [NO_ERRORS_SCHEMA],
+
 })
 export class AppModule { }

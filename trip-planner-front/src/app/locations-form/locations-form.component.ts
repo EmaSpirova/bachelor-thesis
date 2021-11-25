@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -12,8 +12,7 @@ import { MatChip } from '@angular/material/chips';
 import { LocationService } from '../_services/location.service';
 import { Region } from '../_models/region';
 import { RegionService } from '../_services/region.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Location } from '../_models/location';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 

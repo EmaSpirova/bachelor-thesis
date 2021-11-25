@@ -1,19 +1,17 @@
 <form (ngSubmit)="onFormSubmitPlanner(f)" #f="ngForm">
-  <h1 mat-dialog-title>Hi </h1>
   <div mat-dialog-content>
     <p>Planner name</p>
     <mat-form-field appearance="fill">
-      <input matInput required   type="text" [(ngModel)]="planner.name" name="name" placeholder="Planner name">
+      <input matInput required type="text" [(ngModel)]="planner.name" name="name" placeholder="Planner name">
     </mat-form-field>
     <p>Planner description</p>
     <mat-form-field appearance="fill">
-      <textarea matInput required name="description" [(ngModel)]="planner.description" type="text" placeholder="Planner description"></textarea>
+      <textarea matInput required name="description" [(ngModel)]="planner.description" type="text"
+        placeholder="Planner description"></textarea>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    
-    <button mat-button type="submit" [disabled]="!f.form.valid" >Save</button>
+    <button pButton pRipple type="button" label="Save" [disabled]="!f.form.valid"
+      class="p-button-outlined p-button-rounded p-button-help"></button>
   </div>
 </form>
-
-<button mat-button (click)="onCancelClick()">Cancel</button>
