@@ -6,13 +6,12 @@
             <th style="width:4em"></th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-planner>
+    <ng-template pTemplate="body" let-planner let-data>
         <tr>
             <td>{{planner.name}}</td>
-
             <td>
-                <button pButton pRipple type="button" icon="pi pi-heart"
-                    class="p-button-rounded p-button-help p-button-text" (click)="selectPlanner(planner)"></button>
+                <button pButton pRipple type="button" icon="pi pi-heart" class="p-button-rounded p-button-help"
+                    (click)="selectPlanner(planner)" ></button>
             </td>
         </tr>
     </ng-template>

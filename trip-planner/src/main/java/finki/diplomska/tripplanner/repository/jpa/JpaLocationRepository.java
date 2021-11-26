@@ -83,6 +83,13 @@ public interface JpaLocationRepository extends JpaRepository<Location, Long> {
             "(SELECT pl.id_location FROM planners_contain AS pl WHERE pl.id_planner = :plannerId)", nativeQuery = true)
     List<Location> getAllLocationsForPlanner(@Param("plannerId") Long plannerId);
 
+
+    @Query(value = "SELECT l.id_location " +
+            "FROM locations AS l " +
+            "WHERE l.id_location IN " +
+            "(SELECT pl.id_location FROM planners_contain AS pl WHERE pl.id_planner = :plannerId)", nativeQuery = true)
+    List<Long> getAllLocationIdsForPlanner(@Param("plannerId") Long plannerId);
+
     @Query(value = "SELECT *, if(l.id_city is NOT NULL, c.city_name, l.location_name) as result " +
             "FROM locations AS l " +
             "LEFT JOIN cities AS c " +

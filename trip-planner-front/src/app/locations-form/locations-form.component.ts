@@ -67,7 +67,7 @@ export class LocationsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
@@ -139,7 +139,7 @@ export class LocationsFormComponent implements OnInit {
         result => {
           console.log(result);
           this.proba = result;
-          this.router.navigate(['locations'], {queryParams: {cityId: this.cityId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds}});
+          this.router.navigate(['locations'], { queryParams: { cityId: this.cityId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds } });
         }
       );
     } else
@@ -147,7 +147,7 @@ export class LocationsFormComponent implements OnInit {
         this.locationService.getLocationsFromRegion(this.regionId, this.companionId, this.lengthOfStay, this.categoryIds).subscribe(
           result => {
             console.log(result);
-            this.router.navigate(['locations'], {queryParams: {regionId: this.regionId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds}});
+            this.router.navigate(['locations'], { queryParams: { regionId: this.regionId, companionId: this.companionId, lengthOfStay: this.lengthOfStay, categoryIds: this.categoryIds } });
           }
         );
       }

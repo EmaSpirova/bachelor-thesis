@@ -54,5 +54,10 @@ export class LocationService{
         let url = "http://localhost:8080/api/planner/locations";
         return this.httpClient.get<Location[]>(url + "?plannerId=" + id);
     }
+
+    getAllLocationIdsForPlanner(id:number):Observable<number[]>{
+        let url = "http://localhost:8080/api/planner/locationIds";
+        return this.httpClient.get<number[]>(url + "?plannerId="+id);
+    }
     
 }

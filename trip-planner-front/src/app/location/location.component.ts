@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Planner } from '../_models/planner';
 import { LocationService } from '../_services/location.service';
@@ -29,7 +28,7 @@ export class LocationComponent implements OnInit {
   locationId: number;
   plannerLocationDto: PlannerLocationDto;
   ref: DynamicDialogRef;
-
+  locationIdsPlanner: number[];
 
 
   constructor(private route: ActivatedRoute, private locationService: LocationService,
@@ -41,9 +40,9 @@ export class LocationComponent implements OnInit {
     this.listLocations = [];
     this.regionId = 1;
     this.locationId = 1;
-    this.ref = new DynamicDialogRef;
+    this.ref = new DynamicDialogRef();
     this.plannerLocationDto = new PlannerLocationDto();
-
+    this.locationIdsPlanner = [];
   }
 
   ngOnInit(): void {
@@ -84,6 +83,7 @@ export class LocationComponent implements OnInit {
   }
 
   show(location: Location) {
+    console.log(location.id);
     this.ref = this.dialogService.open(AddLocationToPlannerPanelComponent, {
       header: 'Choose a Planner',
       width: '70%',
@@ -92,19 +92,39 @@ export class LocationComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((planner: Planner) => {
-
       this.plannerLocationDto.locationId = location.id;
       this.plannerLocationDto.plannerId = planner.id;
       console.log("LOC ID: " + this.plannerLocationDto.locationId);
       console.log("PLANNER ID: " + this.plannerLocationDto.plannerId);
-      this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
-        data => {
-          console.log(data);
+
+      this.locationService.getAllLocationIdsForPlanner(planner.id).subscribe(
+        lid => {
+          if (lid.length == 0) {
+            this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
+              data => {
+                console.log(data);
+              }
+            );
+            this.messageService.add({ severity: 'success', summary: 'Location ' + location.name + ' has been added to planner: ', detail: planner.name });
+
+          } else if (lid.length > 0) {
+            if (lid.indexOf(this.plannerLocationDto.locationId) !== -1) {
+              console.log("LOKACIJATA VEKE JA IMA VO PLANEROT");
+              this.messageService.add({ severity: 'error', summary: 'Location ' + location.name + ' already exists in the planner.' });
+            } else {
+              this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
+                data => {
+                  console.log(data);
+                }
+              );
+              this.messageService.add({ severity: 'success', summary: 'Location ' + location.name + ' has been added to planner: ', detail: planner.name });
+            }
+
+          }
         }
       );
-      if (planner) {
-        this.messageService.add({ severity: 'success', summary: 'Location ' + location.name +  ' has been added to planner: ' , detail: planner.name });
-      }
+
+
     });
   }
 
@@ -114,7 +134,9 @@ export class LocationComponent implements OnInit {
     }
   }
 
-  onClickBackToMyPlanners(){
+  onClickBackToMyPlanners() {
     this.router.navigate(['planners']);
   }
+
+
 }

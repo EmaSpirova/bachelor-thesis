@@ -2,12 +2,10 @@
 <p>{{locationDetails.name}}</p>
 <p>{{locationDetails.description}}</p>
 
-
 <div class="content-section implementation">
     <div class="card">
-        <h5>More photos</h5>
         <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '640px'}"
-            [numVisible]="5" [circular]="true" [showItemNavigators]="true">
+            [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
             <ng-template pTemplate="item" let-image>
                 <img src="data:image/png;base64,{{image.content}}"
                     style="width: 100%; height: 350px; display: block;" />
@@ -15,9 +13,9 @@
             <ng-template pTemplate="thumbnail" let-image>
                 <div class="p-grid p-nogutter p-justify-center">
                     <img src="data:image/png;base64,{{image.content}}"
-                        style=" height:50px; display: block;" />
+                        style=" display: block;" />
                 </div>
             </ng-template>
         </p-galleria>
     </div>
-
+</div>
