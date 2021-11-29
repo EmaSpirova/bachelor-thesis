@@ -1,4 +1,3 @@
-<form (ngSubmit)="onFormSubmitPlanner(f)" #f="ngForm" >
   <div mat-dialog-content>
     <p>Planner name</p>
     <mat-form-field appearance="fill">
@@ -11,7 +10,6 @@
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button pButton pRipple type="button" label="Save" [disabled]="!f.form.valid"
-      class="p-button-outlined p-button-rounded p-button-help"></button>
+    <button pButton pRipple type="submit" label="Save" 
+      class="p-button-outlined p-button-rounded p-button-help" (click)="onFormSubmitPlanner(planner)"></button>
   </div>
-</form>

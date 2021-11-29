@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Location } from '../_models/location';
 import { LocationService } from '../_services/location.service';
+import { RegisterComponent } from './register/register.component';
 
 
 @Component({
@@ -15,8 +17,9 @@ export class HomepageComponent implements OnInit {
    responsiveOptions;
    locations: Location[];
    villages: Location[];
+   ref: DynamicDialogRef;
 
-   constructor(private locationService: LocationService) {
+   constructor(private locationService: LocationService, private dialogService: DialogService) {
       this.responsiveOptions = [
          {
             breakpoint: '1024px',
@@ -36,6 +39,7 @@ export class HomepageComponent implements OnInit {
       ];
       this.locations = [];
       this.villages = [];
+      this.ref = new DynamicDialogRef;
    }
 
    ngOnInit(): void {
@@ -50,5 +54,15 @@ export class HomepageComponent implements OnInit {
             this.villages = village;
          }
       );
+   }
+
+   onClickSignUp(){
+      console.log("VLEGOV");
+      this.ref = this.dialogService.open(RegisterComponent, {
+         header: 'Register form',
+         width: '70%',
+         contentStyle: { "max-height": "500px", "overflow": "auto" },
+         baseZIndex: 10000
+       });
    }
 }

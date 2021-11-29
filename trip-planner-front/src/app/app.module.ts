@@ -44,6 +44,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import {PaginatorModule} from 'primeng/paginator';
 import {CardModule} from 'primeng/card';
+import { RegisterComponent } from './homepage/register/register.component';
+import { LoginComponent } from './homepage/login/login.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import {CardModule} from 'primeng/card';
     DetailPlannerComponent,
     AddLocationToPlannerPanelComponent,
     HomepageComponent,
-    LocationDetailsComponent
+    LocationDetailsComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

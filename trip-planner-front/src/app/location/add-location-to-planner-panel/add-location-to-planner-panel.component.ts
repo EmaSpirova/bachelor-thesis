@@ -4,8 +4,7 @@ import { Planner } from 'src/app/_models/planner';
 import { PlannerService } from 'src/app/_services/planner.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LocationService } from 'src/app/_services/location.service';
-import { Location } from 'src/app/_models/location';
-import { PlannerLocationDto } from 'src/app/_models/dto/plannerLocationDto';
+
 
 
 @Component({

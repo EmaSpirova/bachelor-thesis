@@ -123,8 +123,6 @@ export class LocationComponent implements OnInit {
           }
         }
       );
-
-
     });
   }
 

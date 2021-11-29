@@ -77,7 +77,6 @@ export class EditPlannerComponent implements OnInit {
   }
 
   onClickBack(){
-    console.log("promena");
     this.router.navigate(['planners']);
   }
 }

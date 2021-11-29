@@ -1,12 +1,7 @@
-import { ResourceLoader } from '@angular/compiler';
-import { Route } from '@angular/compiler/src/core';
-import { Component, Inject, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PlannerDto } from '../_models/dto/plannerDto';
 import { Planner } from '../_models/planner';
-import { PlannerService } from '../_services/planner.service';
 
 @Component({
   selector: 'app-create-initial-planner',
@@ -16,13 +11,10 @@ import { PlannerService } from '../_services/planner.service';
 export class CreateInitialPlannerComponent implements OnInit {
 
   planner: Planner;
-  planners: Planner[];
   plannerDto: PlannerDto;
 
-  constructor(private dialogRef: MatDialogRef<CreateInitialPlannerComponent>,
-              private plannerService : PlannerService, private router : Router) {
+  constructor( private ref: DynamicDialogRef) {
                 this.planner = new Planner;
-                this.planners = [];
                 this.plannerDto = new PlannerDto();
               }
 
@@ -31,20 +23,9 @@ export class CreateInitialPlannerComponent implements OnInit {
     this.plannerDto = new PlannerDto();
   }
 
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-  
-  onFormSubmitPlanner(form: NgForm){
-   console.log(this.planner);
-      this.plannerService.postInitialPlanner(this.planner).subscribe(
-        data=>{
-          console.log(data);
-          this.router.navigate(['planner']);
-        },
-        error => console.log('oops', error)
-     );
-     window.location.reload();
+  onFormSubmitPlanner(planner){
+    this.ref.close(planner);
+    window.location.reload();
   }
 
 

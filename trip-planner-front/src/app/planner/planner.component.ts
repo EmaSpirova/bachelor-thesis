@@ -4,32 +4,28 @@ import { PlannerService } from '../_services/planner.service';
 import { CreateInitialPlannerComponent } from '../create-initial-planner/create-initial-planner.component';
 import { Router } from '@angular/router';
 import { PlannerDto } from '../_models/dto/plannerDto';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { PrimeNGConfig } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 
 
 @Component({
   selector: 'app-planner',
   templateUrl: './planner.component.html',
-  styleUrls: ['./planner.component.css']
+  styleUrls: ['./planner.component.css'],
+  providers: [DialogService, MessageService]
 })
 export class PlannerComponent implements OnInit {
 
   planners: Planner[];
   plannerDto: PlannerDto;
-  editForm: FormGroup;
   ref: DynamicDialogRef;
 
 
   constructor(private plannerService: PlannerService, private router: Router,
-    private fb: FormBuilder, private dialogService: DialogService, private primengConfig: PrimeNGConfig) {
+    private dialogService: DialogService, private primengConfig: PrimeNGConfig, private messageService: MessageService) {
     this.planners = [];
     this.plannerDto = new PlannerDto();
-    this.editForm = fb.group({
-      title: fb.control('initial value', Validators.required)
-    });
-    this.ref = new DynamicDialogRef;   
+    this.ref = new DynamicDialogRef;
   }
 
   ngOnInit(): void {
@@ -50,8 +46,8 @@ export class PlannerComponent implements OnInit {
         this.router.navigate(['edit/planner/', id]);
       }
     );
-
   }
+
   show() {
     this.ref = this.dialogService.open(CreateInitialPlannerComponent, {
       header: 'Create initial planner',
@@ -59,5 +55,17 @@ export class PlannerComponent implements OnInit {
       contentStyle: { "max-height": "500px", "overflow": "auto" },
       baseZIndex: 10000
     });
+    this.ref.onClose.subscribe((planner: Planner) => {
+      console.log("NOVOKREIRANIOT NAME NA PLANNER: " + planner.name);
+      this.plannerService.postInitialPlanner(planner).subscribe(
+        data=>{
+          console.log(data);
+        },
+        error => console.log('oops', error)
+     );
+      this.messageService.add({ severity: 'success', summary: 'The planner: ' + planner.name + ' has been created.' });
+    });
+    
   }
+
 }

@@ -2,7 +2,6 @@ package finki.diplomska.tripplanner.models.dto;
 
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 public class PlannerDto {
