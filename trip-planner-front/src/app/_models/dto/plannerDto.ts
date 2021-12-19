@@ -1,4 +1,3 @@
-import { Location } from "../location";
 
 export class PlannerDto{
     name: string;

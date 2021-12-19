@@ -3,7 +3,7 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryService } from './_services/cateogry.service';
 import { PlannerComponent } from './planner/planner.component';
@@ -46,6 +46,8 @@ import {PaginatorModule} from 'primeng/paginator';
 import {CardModule} from 'primeng/card';
 import { RegisterComponent } from './homepage/register/register.component';
 import { LoginComponent } from './homepage/login/login.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -108,13 +110,19 @@ import { LoginComponent } from './homepage/login/login.component';
     CategoryService,
     PlannerService,
     {
-      provide: MatDialogRef,
-      useValue: {}
+      provide: MatDialogRef, 
+      useValue: {}, 
+    
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     },
     DialogService,
     MessageService,
-    ConfirmationService
-
+    ConfirmationService,
+    AuthGuard
   ],
   
   entryComponents: [

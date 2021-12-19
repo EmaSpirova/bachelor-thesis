@@ -74,3 +74,20 @@ Content-Type: application/x-www-form-urlencoded
 ###
 GET http://localhost:8080/api/images?locationId=1
 Content-Type: application/x-www-form-urlencoded
+
+###
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+
+{"username": "teshht@test.com", "fullName": "nikola", "password" : "nikolce", "confirmPassword": "nikolce"}
+
+###
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{"username": "test@test.com", "password" : "nikolce"}
+
+
+###
+GET http://localhost:8080/api/planners/user
+Content-Type: application/json

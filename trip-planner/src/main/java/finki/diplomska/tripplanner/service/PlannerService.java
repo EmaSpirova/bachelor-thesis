@@ -10,9 +10,10 @@ import java.util.Optional;
 public interface PlannerService {
 
         Planner createPlannerWithRequestParams(String description, String name, List<Location> locationList);
-        Optional<Planner> editPlanner(Long id, PlannerDto plannerDto);
+        Optional<Planner> editPlanner(Long id, PlannerDto plannerDto, String username);
         List<Planner> getAllPlaners();
+        List<Planner> getPlannersByUser(String username);
         Optional<Planner> findById(Long id);
         Planner editPlannerWithRequestParams(Long id, String description, String name, List<Location> locationList);
-        Optional<Planner> newPlanner(PlannerDto plannerDto);
+        Optional<Planner> newPlanner(PlannerDto plannerDto, String username);
 }

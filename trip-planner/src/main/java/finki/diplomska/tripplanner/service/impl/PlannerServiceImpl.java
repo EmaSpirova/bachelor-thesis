@@ -2,17 +2,17 @@ package finki.diplomska.tripplanner.service.impl;
 
 import finki.diplomska.tripplanner.models.Location;
 import finki.diplomska.tripplanner.models.Planner;
+import finki.diplomska.tripplanner.models.User;
 import finki.diplomska.tripplanner.models.dto.PlannerDto;
 import finki.diplomska.tripplanner.models.exceptions.LocationNotFoundException;
 import finki.diplomska.tripplanner.models.exceptions.PlannerNotFoundException;
 import finki.diplomska.tripplanner.repository.jpa.JpaLocationRepository;
 import finki.diplomska.tripplanner.repository.jpa.JpaPlannerRepository;
-import finki.diplomska.tripplanner.service.LocationService;
+import finki.diplomska.tripplanner.repository.jpa.JpaUserRepository;
 import finki.diplomska.tripplanner.service.PlannerService;
 import org.springframework.stereotype.Service;
-import reactor.util.annotation.Nullable;
 
-import java.util.ArrayList;
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,15 +21,23 @@ public class PlannerServiceImpl implements PlannerService {
 
     private final JpaPlannerRepository plannerRepository;
     private final JpaLocationRepository locationRepository;
+    private final JpaUserRepository userRepository;
 
-    public PlannerServiceImpl(JpaPlannerRepository plannerRepository, JpaLocationRepository locationRepository) {
+    public PlannerServiceImpl(JpaPlannerRepository plannerRepository, JpaLocationRepository locationRepository, JpaUserRepository userRepository) {
         this.plannerRepository = plannerRepository;
         this.locationRepository = locationRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public List<Planner> getAllPlaners() {
         return this.plannerRepository.findAll();
+    }
+
+    @Override
+    public List<Planner> getPlannersByUser(String username) {
+        User user = this.userRepository.findByUsername(username);
+        return this.plannerRepository.getPlannersByUser(user.getUsername());
     }
 
     @Override
@@ -39,7 +47,7 @@ public class PlannerServiceImpl implements PlannerService {
 
 
     @Override
-    public Optional<Planner> newPlanner(PlannerDto plannerDto) {
+    public Optional<Planner> newPlanner(PlannerDto plannerDto, String username) {
         /*
         List<Location> locationList  = new ArrayList<>();
         for(Long location : plannerDto.getLocationList()){
@@ -47,9 +55,10 @@ public class PlannerServiceImpl implements PlannerService {
                     .orElseThrow(() -> new LocationNotFoundException(location));
             locationList.add(loc);
         }
-
          */
-           return Optional.of(this.plannerRepository.save(new Planner(plannerDto.getName(), plannerDto.getDescription(), null)));
+        User user = this.userRepository.findByUsername(username);
+        plannerDto.setUser(user.getUsername());
+        return Optional.of(this.plannerRepository.save(new Planner(plannerDto.getName(), plannerDto.getDescription(), null, user)));
     }
 
     @Override
@@ -68,11 +77,14 @@ public class PlannerServiceImpl implements PlannerService {
     }
 
     @Override
-    public Optional<Planner> editPlanner(Long id, PlannerDto plannerDto) {
+    public Optional<Planner> editPlanner(Long id, PlannerDto plannerDto, String username) {
         Planner planner = this.plannerRepository.findById(id).orElseThrow(() -> new PlannerNotFoundException(id));
+        User user = this.userRepository.findByUsername(username);
 
         planner.setName(plannerDto.getName());
         planner.setDescription(plannerDto.getDescription());
+        plannerDto.setUser(user.getUsername());
+        planner.setUser(user);
 /*
         List<Location> locationList  = new ArrayList<>();
         for(Long location : plannerDto.getLocationList()){

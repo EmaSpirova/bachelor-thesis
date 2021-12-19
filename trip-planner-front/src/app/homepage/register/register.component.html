@@ -1,31 +1,36 @@
-<div class="p-grid p-fluid">
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText placeholder="Full name">         
-        </div>
-    </div>
 
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText placeholder="Ema address (Username)">         
+    <div class="p-grid p-fluid">
+        <div class="p-col-12 p-md-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input type="text" pInputText placeholder="Full name" [(ngModel)]="user.fullName" name="fullName"
+            >         
+            </div>
         </div>
-    </div>
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
-            <input type="text" pInputText placeholder="Password">         
+    
+        <div class="p-col-12 p-md-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input type="text" pInputText placeholder="Email address (Username)" [(ngModel)]="user.username" name="username"
+              >         
+            </div>
         </div>
-    </div>
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
-            <input type="text" pInputText placeholder="Repeat password">         
+        <div class="p-col-12 p-md-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
+                <input type="password" pInputText placeholder="Password" [(ngModel)]="user.password" name="password"
+                >         
+            </div>
         </div>
-    </div>
-
-    <div class="p-col-12 p-md-4">
-        <button pButton pRipple type="button" label="Submit" class="p-button-secondary"></button>
-    </div>
-</div>
+        <div class="p-col-12 p-md-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
+                <input type="password" pInputText placeholder="Repeat password" [(ngModel)]="user.confirmPassword" name="confirmPassword"
+                >         
+            </div>
+        </div>
+    
+        <div class="p-col-12 p-md-4">
+            <button pButton pRipple label="Submit" class="p-button-secondary" type="submit" (click)="onFormSubmitSignUp(user)"></button>
+        </div>
+    </div>  

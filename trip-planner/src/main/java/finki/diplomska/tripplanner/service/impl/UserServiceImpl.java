@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class UserServiceImpl  implements UserService {
@@ -27,7 +29,7 @@ public class UserServiceImpl  implements UserService {
             // Make sure that password and confirmPassword match
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
-            return this.userRepository.save(newUser);
+             return this.userRepository.save(newUser);
         }catch(Exception e){
             throw new UsernameAlreadyExistsException("Username '"+newUser.getUsername()+ "' already exists");
         }

@@ -1,7 +1,7 @@
 package finki.diplomska.tripplanner.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "planners")
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -33,11 +32,17 @@ public class Planner {
             inverseJoinColumns = @JoinColumn(name = "id_location"))
     private List<Location> locationList;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
-    public Planner(String name, String description, List<Location> locationList){
+    public Planner(){
+    }
+
+    public Planner(String name, String description, List<Location> locationList, User user){
             this.name = name;
             this.description = description;
             this.locationList = locationList;
+            this.user = user;
     }
 
     public static synchronized Planner createNewPlanner(String plandesc, String planname, List<Location> locationList){

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { PlannerDto } from '../_models/dto/plannerDto';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { UserDto } from '../_models/dto/userDto';
+import { UserService } from '../_services/user.service';
 
 
 @Component({
@@ -19,13 +21,15 @@ export class PlannerComponent implements OnInit {
   planners: Planner[];
   plannerDto: PlannerDto;
   ref: DynamicDialogRef;
-
+  user: UserDto;
 
   constructor(private plannerService: PlannerService, private router: Router,
-    private dialogService: DialogService, private primengConfig: PrimeNGConfig, private messageService: MessageService) {
+    private dialogService: DialogService, private primengConfig: PrimeNGConfig, private messageService: MessageService,
+    private userService : UserService) {
     this.planners = [];
     this.plannerDto = new PlannerDto();
     this.ref = new DynamicDialogRef;
+    this.user = new UserDto();
   }
 
   ngOnInit(): void {
@@ -35,8 +39,9 @@ export class PlannerComponent implements OnInit {
     this.plannerService.getAllPlanners().subscribe(
       data => {
         this.planners = data;
+        localStorage.getItem("token");
       }
-    );
+    ); 
   }
 
   onClickEditPlannerGet(id: number) {

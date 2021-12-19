@@ -11,16 +11,13 @@ import { Planner } from '../_models/planner';
 export class CreateInitialPlannerComponent implements OnInit {
 
   planner: Planner;
-  plannerDto: PlannerDto;
 
   constructor( private ref: DynamicDialogRef) {
                 this.planner = new Planner;
-                this.plannerDto = new PlannerDto();
               }
 
   ngOnInit(): void {
     this.planner = new Planner();
-    this.plannerDto = new PlannerDto();
   }
 
   onFormSubmitPlanner(planner){

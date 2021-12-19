@@ -10,8 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -37,11 +39,20 @@ public class User implements UserDetails {
     private Date create_At;
     private Date update_At;
 
-    //OneToMany with Project
+    //OneToMany with Planners
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+    @JsonIgnore
+    private List<Planner> planners = new ArrayList<>();
 
     public User() {
     }
 
+    public User(String username, String fullName, String password, String confirmPassword) {
+        this.username = username;
+        this.fullName = fullName;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
 
     @PrePersist
     protected void onCreate(){

@@ -19,12 +19,11 @@ public class UserDto {
 
     private Date update_At;
 
-    public UserDto(String username, String fullName, String password, String confirmPassword, Date create_At, Date update_At) {
+    public UserDto(String username, String fullName, String password, String confirmPassword) {
         this.username = username;
         this.fullName = fullName;
         this.password = password;
         this.confirmPassword = confirmPassword;
-        this.create_At = create_At;
-        this.update_At = update_At;
+
     }
 }

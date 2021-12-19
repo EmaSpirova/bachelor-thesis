@@ -1,1 +1,18 @@
-<p>login works!</p>
+<div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+        <input type="text" pInputText placeholder="Email address (Username)" 
+             [(ngModel)]="loginRequest.username" name="username">
+    </div>
+</div>
+<div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
+        <input type="password" pInputText placeholder="Password" name="password" [(ngModel)]="loginRequest.password">
+    </div>
+</div>
+
+<div class="p-col-12 p-md-4">
+    <button pButton pRipple label="Log in" class="p-button-secondary" type="submit"
+        (click)="onFormLogIn(loginRequest)"></button>
+</div>
