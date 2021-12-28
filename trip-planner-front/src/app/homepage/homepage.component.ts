@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -49,7 +50,6 @@ export class HomepageComponent implements OnInit {
    }
 
    ngOnInit(): void {
-/*
       this.locationService.getWeekendGetaways().subscribe(
          data => {
             this.locations = data;
@@ -60,7 +60,7 @@ export class HomepageComponent implements OnInit {
             this.villages = village;
          }
       );
-      */
+
    }
 
    onClickSignUp() {
@@ -72,16 +72,20 @@ export class HomepageComponent implements OnInit {
       });
 
       this.ref.onClose.subscribe((user: UserDto) => {
-         this.userService.registerUser(user).subscribe(
-            data  => {
-               console.log(data);
-              
-            }
-         );
-      });
+         if (user) {
+            this.userService.registerUser(user).subscribe(
+               data => {
+                  console.log(data);
+               }
+            );
+         }
+      },
+         err => {
+
+         });
    }
 
-   
+
    onClickLogIn() {
       this.ref = this.dialogService.open(LoginComponent, {
          header: 'Log in if you already have an account',
@@ -89,15 +93,23 @@ export class HomepageComponent implements OnInit {
          contentStyle: { "max-height": "500px", "overflow": "auto" },
          baseZIndex: 10000
       });
-      this.ref.onClose.subscribe((loginRequest : LoginRequest) => {
-         this.userService.authenticateUser(loginRequest).subscribe(
-            (data : any)  => {
-               console.log(data);
-               if(this.userService.isUserLoggedIn()){
-                  this.router.navigate(['planners']);
+      this.ref.onClose.subscribe((loginRequest: LoginRequest) => {
+         if (loginRequest) {
+            this.userService.authenticateUser(loginRequest).subscribe(
+               (data: any) => {
+                  console.log(data);
+                  if (this.userService.isUserLoggedIn()) {
+                     this.router.navigate(['planners']);
+                  }
                }
-            }
-         );
+            );
+         }
       });
+   }
+
+   ngOnDestroy() {
+      if (this.ref) {
+         this.ref.close();
+      }
    }
 }

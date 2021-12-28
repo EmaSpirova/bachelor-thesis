@@ -42,12 +42,13 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
-import {PaginatorModule} from 'primeng/paginator';
-import {CardModule} from 'primeng/card';
+import { PaginatorModule } from 'primeng/paginator';
+import { CardModule } from 'primeng/card';
 import { RegisterComponent } from './homepage/register/register.component';
 import { LoginComponent } from './homepage/login/login.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -110,9 +111,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     CategoryService,
     PlannerService,
     {
-      provide: MatDialogRef, 
-      useValue: {}, 
-    
+      provide: MatDialogRef,
+      useValue: {},
+
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -124,7 +125,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     ConfirmationService,
     AuthGuard
   ],
-  
+
   entryComponents: [
     AddLocationToPlannerPanelComponent
   ],

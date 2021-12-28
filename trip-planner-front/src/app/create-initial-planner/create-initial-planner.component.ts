@@ -1,3 +1,4 @@
+import { PlatformModule } from '@angular/cdk/platform';
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PlannerDto } from '../_models/dto/plannerDto';
@@ -10,18 +11,18 @@ import { Planner } from '../_models/planner';
 })
 export class CreateInitialPlannerComponent implements OnInit {
 
-  planner: Planner;
+  plannerDto: PlannerDto;
 
   constructor( private ref: DynamicDialogRef) {
-                this.planner = new Planner;
+                this.plannerDto = new PlannerDto();
               }
 
   ngOnInit(): void {
-    this.planner = new Planner();
+    this.plannerDto = new Planner();
   }
 
-  onFormSubmitPlanner(planner){
-    this.ref.close(planner);
+  onFormSubmitPlanner(plannerDto){
+    this.ref.close(plannerDto);
     window.location.reload();
   }
 

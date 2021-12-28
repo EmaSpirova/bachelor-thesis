@@ -83,5 +83,20 @@ public class PlannerRestController {
                 .orElseGet(()-> ResponseEntity.badRequest().build());
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteById(@PathVariable Long id) {
+        this.plannerService.deletePlannerById(id);
+        return this.plannerService.findById(id)
+                .map(planner -> ResponseEntity.ok().body(planner))
+                .orElseGet(()-> ResponseEntity.notFound().build());
+    }
 
+
+    @DeleteMapping(value = "/delete-from-planner")
+    public ResponseEntity deleteLocationFromPlanner(@PathVariable Long locationId){
+        this.plannerService.deleteLocationFromPlanner(locationId);
+        return this.locationService.findById(locationId)
+                .map(location -> ResponseEntity.ok().body(location))
+                .orElseGet(()-> ResponseEntity.notFound().build());
+    }
 }

@@ -91,3 +91,7 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/api/planners/user
 Content-Type: application/json
+
+###
+DELETE http://localhost:8080/api/delete/19
+Content-Type: application/json

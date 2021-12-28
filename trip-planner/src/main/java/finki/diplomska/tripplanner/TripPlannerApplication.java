@@ -20,7 +20,6 @@ public class TripPlannerApplication {
         return new BCryptPasswordEncoder();
     }
 
-
     public static void main(String[] args) {
         SpringApplication.run(TripPlannerApplication.class, args);
     }

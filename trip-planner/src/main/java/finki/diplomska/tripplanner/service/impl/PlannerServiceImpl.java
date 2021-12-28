@@ -12,7 +12,6 @@ import finki.diplomska.tripplanner.repository.jpa.JpaUserRepository;
 import finki.diplomska.tripplanner.service.PlannerService;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +58,16 @@ public class PlannerServiceImpl implements PlannerService {
         User user = this.userRepository.findByUsername(username);
         plannerDto.setUser(user.getUsername());
         return Optional.of(this.plannerRepository.save(new Planner(plannerDto.getName(), plannerDto.getDescription(), null, user)));
+    }
+
+    @Override
+    public void deletePlannerById(Long id) {
+        this.plannerRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteLocationFromPlanner(Long locationId) {
+        this.plannerRepository.deleteLocationFromPlanner(locationId);
     }
 
     @Override

@@ -107,4 +107,5 @@ public interface JpaLocationRepository extends JpaRepository<Location, Long> {
             "ON l.id_location = lb.id_location " +
             "WHERE lb.id_category=4", nativeQuery = true)
     List<Location> getVillages();
+
 }

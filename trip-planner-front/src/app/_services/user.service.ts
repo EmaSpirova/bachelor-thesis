@@ -7,47 +7,45 @@ import { UserDto } from "../_models/dto/userDto";
 import { User } from "../_models/user";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class UserService{
+export class UserService {
 
-     headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Headers': 'Content-Type',
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Headers': 'Content-Type',
 
-      });
-    
-    constructor(private httpClient: HttpClient){
+  });
 
-    }
+  constructor(private httpClient: HttpClient) {
 
-    registerUser(user : UserDto) : Observable<User>{
-        let url = "http://localhost:8080/api/users/register";
-        var reqHeader = new HttpHeaders({'No-Auth' : 'True'});
-        return this.httpClient.post<User>(url, user, { headers: reqHeader });
-    }
-    
-    authenticateUser(loginResult : LoginRequest) {
-        let url = "http://localhost:8080/api/users/login";
-        var reqHeader = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post<any>(url, loginResult)
-        .pipe(
-            map(userData => {
-                sessionStorage.setItem("username", loginResult.username);
-                let tokenStr =  userData.token;
-                sessionStorage.setItem("token", tokenStr);
-                return userData;
-            })
-        );
-    }
-  
-      isUserLoggedIn() {
-        let user = sessionStorage.getItem("username");
-        let token = sessionStorage.getItem("token");
-        console.log(user);
-        console.log(token);
-        console.log(!(user === null));
-        return !(user === null);
-      }
-    
+  }
+
+  registerUser(user: UserDto): Observable<User> {
+    let url = "http://localhost:8080/api/users/register";
+    return this.httpClient.post<User>(url, user, { headers: this.headers });
+  }
+
+  authenticateUser(loginResult: LoginRequest) {
+    let url = "http://localhost:8080/api/users/login";
+    return this.httpClient.post<any>(url, loginResult)
+      .pipe(
+        map(userData => {
+          sessionStorage.setItem("username", loginResult.username);
+          let tokenStr = userData.token;
+          sessionStorage.setItem("token", tokenStr);
+          return userData;
+        })
+      );
+  }
+
+  isUserLoggedIn() {
+    let user = sessionStorage.getItem("username");
+    let token = sessionStorage.getItem("token");
+    console.log(user);
+    console.log(token);
+    console.log(!(user === null));
+    return !(user === null);
+  }
+
 }

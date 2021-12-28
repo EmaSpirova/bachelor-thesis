@@ -16,4 +16,6 @@ public interface PlannerService {
         Optional<Planner> findById(Long id);
         Planner editPlannerWithRequestParams(Long id, String description, String name, List<Location> locationList);
         Optional<Planner> newPlanner(PlannerDto plannerDto, String username);
+        void deletePlannerById(Long id);
+        void deleteLocationFromPlanner(Long locationId);
 }

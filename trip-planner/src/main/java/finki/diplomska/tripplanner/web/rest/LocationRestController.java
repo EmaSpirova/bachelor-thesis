@@ -4,7 +4,6 @@ import finki.diplomska.tripplanner.models.Location;
 import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 import finki.diplomska.tripplanner.service.LocationService;
 import finki.diplomska.tripplanner.service.PlannerService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,4 +75,5 @@ public class LocationRestController {
     public List<Long> getAllLocationIdsForPlanner(@RequestParam Long plannerId){
         return this.locationService.getAllLocationIdsForPlanner(plannerId);
     }
+
 }

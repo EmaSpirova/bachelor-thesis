@@ -92,6 +92,7 @@ export class LocationComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((planner: Planner) => {
+      if(planner){
       this.plannerLocationDto.locationId = location.id;
       this.plannerLocationDto.plannerId = planner.id;
       console.log("LOC ID: " + this.plannerLocationDto.locationId);
@@ -123,7 +124,9 @@ export class LocationComponent implements OnInit {
           }
         }
       );
+      }
     });
+  
   }
 
   ngOnDestroy() {

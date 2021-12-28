@@ -35,6 +35,8 @@ public class Location {
 
     private int duration;
 
+    private String trivia;
+
     @Lob
     @JsonIgnore
     private byte[] photo;

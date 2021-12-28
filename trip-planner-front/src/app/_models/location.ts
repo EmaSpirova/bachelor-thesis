@@ -7,6 +7,7 @@ export class Location{
     address: string;
     priority: string;
     duration: number;
+    trivia: string;
     photo: any[];
 
     constructor(){
@@ -16,6 +17,7 @@ export class Location{
         this.address = 'Location addreess';
         this.priority = 'Location priority';
         this.duration = 1;
+        this.trivia = '';
         this.photo = [];
     }
 }

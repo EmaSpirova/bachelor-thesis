@@ -7,7 +7,6 @@ import { PlannerDto } from '../_models/dto/plannerDto';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { UserDto } from '../_models/dto/userDto';
-import { UserService } from '../_services/user.service';
 
 
 @Component({
@@ -22,10 +21,11 @@ export class PlannerComponent implements OnInit {
   plannerDto: PlannerDto;
   ref: DynamicDialogRef;
   user: UserDto;
+  userDisplayName = '';
+  status = '';
 
   constructor(private plannerService: PlannerService, private router: Router,
-    private dialogService: DialogService, private primengConfig: PrimeNGConfig, private messageService: MessageService,
-    private userService : UserService) {
+    private dialogService: DialogService, private primengConfig: PrimeNGConfig, private messageService: MessageService) {
     this.planners = [];
     this.plannerDto = new PlannerDto();
     this.ref = new DynamicDialogRef;
@@ -35,13 +35,13 @@ export class PlannerComponent implements OnInit {
   ngOnInit(): void {
 
     this.primengConfig.ripple = true;
-
+    let name1: string = sessionStorage.getItem("username") as string;
+    this.userDisplayName = name1;
     this.plannerService.getAllPlanners().subscribe(
       data => {
         this.planners = data;
-        localStorage.getItem("token");
       }
-    ); 
+    );
   }
 
   onClickEditPlannerGet(id: number) {
@@ -60,17 +60,42 @@ export class PlannerComponent implements OnInit {
       contentStyle: { "max-height": "500px", "overflow": "auto" },
       baseZIndex: 10000
     });
-    this.ref.onClose.subscribe((planner: Planner) => {
-      console.log("NOVOKREIRANIOT NAME NA PLANNER: " + planner.name);
-      this.plannerService.postInitialPlanner(planner).subscribe(
-        data=>{
-          console.log(data);
-        },
-        error => console.log('oops', error)
-     );
-      this.messageService.add({ severity: 'success', summary: 'The planner: ' + planner.name + ' has been created.' });
+    this.ref.onClose.subscribe((plannerDto: PlannerDto) => {
+      if (plannerDto) {
+        console.log("NOVOKREIRANIOT NAME NA PLANNER: " + plannerDto.name);
+        this.plannerService.postInitialPlanner(plannerDto).subscribe(
+          data => {
+            console.log(data);
+          },
+          error => console.log('oops', error)
+        );
+        this.messageService.add({ severity: 'success', summary: 'The planner: ' + plannerDto.name + ' has been created.' });
+      }
+      
     });
-    
+
   }
 
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
+
+  onClickLogout() {
+    sessionStorage.removeItem("token");
+    console.log("SESSION HAS ENDED, THE USER IS LOGGED OUT" + sessionStorage.getItem("token"));
+    this.router.navigate(['']);
+  }
+
+  onDeletePlanner(id: number) {
+    console.log("DELETE KOCHE: " + id);
+    this.plannerService.deletePlannerById(id).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => console.log('error', error)
+    );
+    window.location.reload();
+  }
 }

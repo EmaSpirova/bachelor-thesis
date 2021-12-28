@@ -182,6 +182,4 @@ public class LocationServiceImpl implements LocationService {
     public List<Long> getAllLocationIdsForPlanner(Long plannerId) {
         return this.locationRepository.getAllLocationIdsForPlanner(plannerId);
     }
-
-
 }

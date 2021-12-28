@@ -25,7 +25,7 @@ public class Planner {
     @Column(name = "planner_description")
     private String description;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "planners_contain",
             joinColumns = @JoinColumn(name = "id_planner"),

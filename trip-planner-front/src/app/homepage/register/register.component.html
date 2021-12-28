@@ -1,36 +1,43 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-    <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input type="text" pInputText placeholder="Full name" [(ngModel)]="user.fullName" name="fullName"
-            >         
-            </div>
+<div class="p-grid p-fluid">
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText placeholder="Full name" [(ngModel)]="user.fullName" name="fullName"
+                class="form-control">
+
         </div>
-    
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input type="text" pInputText placeholder="Email address (Username)" [(ngModel)]="user.username" name="username"
-              >         
-            </div>
+    </div>
+
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText placeholder="Email address (Username)" [(ngModel)]="user.username"
+                name="username">
         </div>
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
-                <input type="password" pInputText placeholder="Password" [(ngModel)]="user.password" name="password"
-                >         
-            </div>
+    </div>
+
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
+            <input type="password" pInputText placeholder="Password" [(ngModel)]="user.password" name="password">
         </div>
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
-                <input type="password" pInputText placeholder="Repeat password" [(ngModel)]="user.confirmPassword" name="confirmPassword"
-                >         
-            </div>
+    </div>
+
+    <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
+            <input type="password" pInputText placeholder="Repeat password" [(ngModel)]="user.confirmPassword"
+                name="confirmPassword">
         </div>
-    
-        <div class="p-col-12 p-md-4">
-            <button pButton pRipple label="Submit" class="p-button-secondary" type="submit" (click)="onFormSubmitSignUp(user)"></button>
-        </div>
-    </div>  
+    </div>
+
+    <div class="p-col-12 p-md-4">
+        <button pButton pRipple label="Submit" class="p-button-secondary" type="button"
+            (click)="onFormSubmitSignUp(user)"></button>
+    </div>
+</div>
+
+

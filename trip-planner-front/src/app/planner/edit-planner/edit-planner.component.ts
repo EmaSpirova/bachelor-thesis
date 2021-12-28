@@ -23,7 +23,7 @@ export class EditPlannerComponent implements OnInit {
 
 
   constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private plannerService: PlannerService,
-    private locationService : LocationService) {
+    private locationService: LocationService) {
     this.planner = new Planner();
     this.planners = [];
     this.form = fb.group({
@@ -49,11 +49,11 @@ export class EditPlannerComponent implements OnInit {
 
     this.locationService.getLocationsForPlanner(this.id).subscribe(
       data => {
-          this.locations = data;
+        this.locations = data;
       }
     );
-    }
- 
+  }
+
   onSubmit() {
     this.updatePlanner();
 
@@ -76,7 +76,11 @@ export class EditPlannerComponent implements OnInit {
       });
   }
 
-  onClickBack(){
+  onClickBack() {
     this.router.navigate(['planners']);
+  }
+
+  onClickRemoveLocation(id : number){
+    
   }
 }

@@ -10,37 +10,40 @@ import { Planner } from "../_models/planner";
 export class PlannerService {
 
     httpHeaders: HttpHeaders = new HttpHeaders({
-        'Authorization': ''+sessionStorage.getItem("token"),
+        'Authorization': '' + sessionStorage.getItem("token"),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      });
-      
+    });
 
-    constructor(private httpClient: HttpClient){
+
+    constructor(private httpClient: HttpClient) {
     }
 
-   
-    getAllPlanners():Observable<Planner[]>{
+
+    getAllPlanners(): Observable<Planner[]> {
         let url = "http://localhost:8080/api/planners/user";
         console.log("SERVID: " + sessionStorage.getItem("token"));
-        console.log(this.httpHeaders.get('Authorization'))  ;
-        return this.httpClient.get<Planner[]>(url, {headers: this.httpHeaders});     
+        console.log(this.httpHeaders.get('Authorization'));
+        return this.httpClient.get<Planner[]>(url, { headers: this.httpHeaders });
     }
 
-    postInitialPlanner(planner: Planner): Observable<Planner>{     
+    postInitialPlanner(plannerDto: PlannerDto): Observable<Planner> {
         let url = "http://localhost:8080/api/planner/new";
-        return this.httpClient.post<Planner>(url, planner);
+        return this.httpClient.post<Planner>(url, plannerDto);
     }
 
-    updatePlanner(id: number, plannerDto : PlannerDto):Observable<Planner>{    
-    let url = "http://localhost:8080/api/edit/planner/" + id;
-    return this.httpClient.put<Planner>(url, plannerDto, {headers: this.httpHeaders});
+    updatePlanner(id: number, plannerDto: PlannerDto): Observable<Planner> {
+        let url = "http://localhost:8080/api/edit/planner/" + id;
+        return this.httpClient.put<Planner>(url, plannerDto, { headers: this.httpHeaders });
     }
 
-    getPlannerById(id:number):Observable<Planner>{
+    getPlannerById(id: number): Observable<Planner> {
         let url = "http://localhost:8080/api/planner/" + id;
         return this.httpClient.get<Planner>(url);
     }
 
-
+    deletePlannerById(id: number): Observable<Planner> {
+        let url = "http://localhost:8080/api/delete/" + id;
+        return this.httpClient.delete<Planner>(url, { headers: this.httpHeaders });
+    }
 }
