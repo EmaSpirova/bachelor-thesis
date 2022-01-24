@@ -3,6 +3,8 @@ package finki.diplomska.tripplanner.service;
 import finki.diplomska.tripplanner.models.Location;
 import finki.diplomska.tripplanner.models.Planner;
 import finki.diplomska.tripplanner.models.dto.PlannerDto;
+import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,5 +19,5 @@ public interface PlannerService {
         Planner editPlannerWithRequestParams(Long id, String description, String name, List<Location> locationList);
         Optional<Planner> newPlanner(PlannerDto plannerDto, String username);
         void deletePlannerById(Long id);
-        void deleteLocationFromPlanner(Long locationId);
+        ResponseEntity deleteLocationFromPlanner(PlannerLocationDto plannerLocationDto);
 }

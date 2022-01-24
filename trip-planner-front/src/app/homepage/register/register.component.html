@@ -1,43 +1,74 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-<div class="p-grid p-fluid">
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText placeholder="Full name" [(ngModel)]="user.fullName" name="fullName"
-                class="form-control">
 
+<div class="readersack">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form [formGroup]="form" #myform="ngForm" (ngSubmit)="onFormSubmitSignUp(user)">
+                    <div class="form-group">
+                        <label>Full name</label>
+                        <input formControlName="fullName" id="fullName" type="text" class="form-control"
+                            [(ngModel)]="user.fullName"
+                            [ngClass]="{ 'is-invalid': myform.submitted && form.get('fullName')?.errors?.['required']}" />
+                        <div *ngIf="myform.submitted && form.get('fullName')?.errors" class="invalid-feedback">
+                            <div *ngIf="form.get('fullName')?.hasError('required') && myform.submitted">
+                                Full Name is required
+                            </div>
+                        </div>
+
+                        <label>Username (email)</label>
+                        <input formControlName="username" id="username" type="text" class="form-control"
+                            [(ngModel)]="user.username"
+                            [ngClass]="{ 'is-invalid': myform.submitted && (form.get('username')?.errors?.['required'] || 
+                            form.get('username')?.errors?.['email'] || form.get('username')?.hasError('validateUsername'))}" />
+                        <div *ngIf="form.get('username')?.hasError('required') && myform.submitted"
+                            class="invalid-feedback">
+                            Username is required</div>
+                        <div *ngIf="form.get('username')?.hasError('email') && myform.submitted"
+                            class="invalid-feedback">
+                            Please enter valid email.</div>
+                        <div *ngIf="form.get('username')?.hasError('validateUsername') && myform.submitted"
+                            class="invalid-feedback">
+                            Username already exists</div>
+
+
+
+                        <label>Password</label>
+                        <input formControlName="password" id="password" type="password" class="form-control"
+                            [(ngModel)]="user.password" [ngClass]="{ 'is-invalid': myform.submitted && (form.get('password')?.errors?.['required'] ||
+                            form.get('password')?.errors?.['minlength'])}" />
+                        <div *ngIf="form.get('password')?.hasError('required') && myform.submitted"
+                            class="invalid-feedback">
+                            Password is required</div>
+                        <div *ngIf="form.get('password')?.errors?.['minlength'] && myform.submitted"
+                            class="invalid-feedback">
+                            Password must be at least 6 characters long.
+                        </div>
+
+                        <label>Confirm password</label>
+                        <input formControlName="confirmPassword" id="confirmPassword" type="password"
+                            class="form-control" [(ngModel)]="user.confirmPassword"
+                            [ngClass]="{ 'is-invalid': myform.submitted && (form.get('confirmPassword')?.errors?.['required'] || 
+                            form.get('confirmPassword')?.errors?.['minlength'] || form.get('confirmPassword')?.errors?.['mustMatch'])}" />
+                        <div *ngIf="form.get('confirmPassword')?.hasError('required') && myform.submitted"
+                            class="invalid-feedback">
+                            Confirm Password is required</div>
+                        <div *ngIf="form.get('confirmPassword')?.errors?.['minlength'] && myform.submitted"
+                            class="invalid-feedback">
+                            Confirm Password must be at least 6 characters long.
+                        </div>
+                        <div *ngIf="form.get('confirmPassword')?.errors?.['mustMatch'] && myform.submitted"
+                            class="invalid-feedback">Password and confirm password must match
+                        </div>
+
+                        <div class="p-col-12 p-md-4">
+                            <button type="submit" pButton pRipple class="p-button-secondary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText placeholder="Email address (Username)" [(ngModel)]="user.username"
-                name="username">
-        </div>
-    </div>
-
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
-            <input type="password" pInputText placeholder="Password" [(ngModel)]="user.password" name="password">
-        </div>
-    </div>
-
-    <div class="p-col-12 p-md-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
-            <input type="password" pInputText placeholder="Repeat password" [(ngModel)]="user.confirmPassword"
-                name="confirmPassword">
-        </div>
-    </div>
-
-    <div class="p-col-12 p-md-4">
-        <button pButton pRipple label="Submit" class="p-button-secondary" type="button"
-            (click)="onFormSubmitSignUp(user)"></button>
     </div>
 </div>
-
-

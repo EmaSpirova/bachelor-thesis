@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlannerDto } from 'src/app/_models/dto/plannerDto';
+import { PlannerLocationDto } from 'src/app/_models/dto/plannerLocationDto';
 import { Location } from 'src/app/_models/location';
 import { Planner } from 'src/app/_models/planner';
 import { LocationService } from 'src/app/_services/location.service';
@@ -20,7 +21,7 @@ export class EditPlannerComponent implements OnInit {
   plannerDto: PlannerDto;
   id: number;
   locations: Location[];
-
+  plannerLocationDto: PlannerLocationDto;
 
   constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private plannerService: PlannerService,
     private locationService: LocationService) {
@@ -32,6 +33,7 @@ export class EditPlannerComponent implements OnInit {
     this.plannerDto = new PlannerDto();
     this.id = 1;
     this.locations = [];
+    this.plannerLocationDto = new PlannerLocationDto();
   }
 
   ngOnInit(): void {
@@ -63,7 +65,7 @@ export class EditPlannerComponent implements OnInit {
     this.router.navigate(['form']);
   }
 
-  private updatePlanner() {
+  updatePlanner() {
     this.plannerService.updatePlanner(this.id, this.form.value)
       .pipe()
       .subscribe({
@@ -80,7 +82,18 @@ export class EditPlannerComponent implements OnInit {
     this.router.navigate(['planners']);
   }
 
-  onClickRemoveLocation(id : number){
-    
+  onClickRemoveLocation(planner: Planner, location: Location) {
+    planner.id = this.id;
+
+    this.plannerLocationDto.plannerId = planner.id;
+    this.plannerLocationDto.locationId = location.id;
+    console.log(this.plannerLocationDto.plannerId);
+    console.log(this.plannerLocationDto.locationId);
+    this.plannerService.deleteLocationFromPlanner(this.plannerLocationDto).subscribe(
+      data => {
+        console.log("deleted")
+      }
+    );
+    window.location.reload();
   }
 }

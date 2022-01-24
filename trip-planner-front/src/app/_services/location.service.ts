@@ -22,7 +22,7 @@ export class LocationService{
 
     postLocationToPlanner(plannerLocationDto : PlannerLocationDto) : Observable<Location>{
         let url = "http://localhost:8080/api/add-location";
-        return this.httpClient.put<Location>(url, plannerLocationDto);
+        return this.httpClient.post<Location>(url, plannerLocationDto);
     }
 
     getLocationsForPlanner(plannerId : number) : Observable<Location[]>{

@@ -44,14 +44,14 @@ public class LocationRestController {
     }
 
     @GetMapping(value = "/region/locations")
-    public List<Location> getAllLocationsFromRegion(@RequestParam(required = false) Long regionId,
-                                                    @RequestParam(required = false)  Long companionId,
-                                                    @RequestParam(required = false) Long lengthOfStay,
-                                                    @RequestParam(required = false) String categoryIds){
+    public List<Location> getAllLocationsFromRegion(@RequestParam Long regionId,
+                                                    @RequestParam  Long companionId,
+                                                    @RequestParam Long lengthOfStay,
+                                                    @RequestParam String categoryIds){
         return this.locationService.findLocationsFromRegionForm(regionId, companionId,lengthOfStay, categoryIds);
     }
 
-    @PutMapping(value = "/add-location")
+    @PostMapping(value = "/add-location")
     public Location addLocationToPlanner(@RequestBody PlannerLocationDto plannerLocationDto){
         return this.locationService.addLocationToPlanner(plannerLocationDto);
     }

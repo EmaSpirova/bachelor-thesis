@@ -182,4 +182,9 @@ public class LocationServiceImpl implements LocationService {
     public List<Long> getAllLocationIdsForPlanner(Long plannerId) {
         return this.locationRepository.getAllLocationIdsForPlanner(plannerId);
     }
+
+    @Override
+    public List<Location> getLocationsForCity(Long cityId) {
+        return this.locationRepository.getLocationsForCity(cityId);
+    }
 }

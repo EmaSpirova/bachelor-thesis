@@ -42,10 +42,24 @@ export class UserService {
   isUserLoggedIn() {
     let user = sessionStorage.getItem("username");
     let token = sessionStorage.getItem("token");
-    console.log(user);
-    console.log(token);
-    console.log(!(user === null));
     return !(user === null);
+  }
+
+  getAllUsernames() {
+    let url = "http://localhost:8080/api/users/usernames";
+    return this.httpClient.get<string[]>(url);
+  }
+
+  getPassword(loginRequest : LoginRequest){
+    let url="http://localhost:8080/api/users/password";
+    const options = {
+      
+      body: {
+          "username": loginRequest.username
+          
+      } 
+  }
+    return this.httpClient.request('get', url, options);
   }
 
 }

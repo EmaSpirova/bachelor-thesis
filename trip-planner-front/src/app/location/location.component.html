@@ -8,6 +8,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Photo</th>
       <th scope="col">Location name</th>
       <th scope="col"> Add to my planner</th>
       <th scope="col">See details </th>
@@ -16,11 +17,13 @@
   <tbody>
     <tr *ngFor="let location of listLocations">
       <td>{{location.id}}</td>
+      <td><img src="data:image/png;base64,{{location.photo}}" /></td>
       <td>{{location.name}}</td>
       <td><button type="button" (click)="show(location)" pButton icon="pi pi-info-circle"
           label="Add to my planner"></button></td>
       <td><button type="button" color="primary" pButton icon="pi pi-info-circle"
-          (click)="onClickSeeDetails(location.id)" label="See details"></button></td>
+          (click)="onClickSeeDetails(location.id)" label="See details"></button>
+      </td>
     </tr>
   </tbody>
 </table>

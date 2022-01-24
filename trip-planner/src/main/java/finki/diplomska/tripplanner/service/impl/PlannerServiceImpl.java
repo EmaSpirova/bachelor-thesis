@@ -4,12 +4,14 @@ import finki.diplomska.tripplanner.models.Location;
 import finki.diplomska.tripplanner.models.Planner;
 import finki.diplomska.tripplanner.models.User;
 import finki.diplomska.tripplanner.models.dto.PlannerDto;
+import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 import finki.diplomska.tripplanner.models.exceptions.LocationNotFoundException;
 import finki.diplomska.tripplanner.models.exceptions.PlannerNotFoundException;
 import finki.diplomska.tripplanner.repository.jpa.JpaLocationRepository;
 import finki.diplomska.tripplanner.repository.jpa.JpaPlannerRepository;
 import finki.diplomska.tripplanner.repository.jpa.JpaUserRepository;
 import finki.diplomska.tripplanner.service.PlannerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,8 +68,9 @@ public class PlannerServiceImpl implements PlannerService {
     }
 
     @Override
-    public void deleteLocationFromPlanner(Long locationId) {
-        this.plannerRepository.deleteLocationFromPlanner(locationId);
+    public ResponseEntity deleteLocationFromPlanner(PlannerLocationDto plannerLocationDto) {
+        plannerRepository.deleteLocationFromPlanner(plannerLocationDto.getPlannerId(), plannerLocationDto.getLocationId());
+        return null;
     }
 
     @Override

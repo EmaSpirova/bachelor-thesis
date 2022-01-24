@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Planner } from 'src/app/_models/planner';
 import { PlannerService } from 'src/app/_services/planner.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { LocationService } from 'src/app/_services/location.service';
 
 
 
@@ -16,8 +14,7 @@ export class AddLocationToPlannerPanelComponent implements OnInit {
 
   planners: Planner[];
   
-  constructor(private plannerService: PlannerService,
-    private route: ActivatedRoute, private ref: DynamicDialogRef, private locationService : LocationService) {
+  constructor(private plannerService: PlannerService, private ref: DynamicDialogRef) {
     this.planners = [];
   }
 
@@ -28,7 +25,6 @@ export class AddLocationToPlannerPanelComponent implements OnInit {
         this.planners = planner;
       }
     );
-
   }
 
   selectPlanner(planner: Planner) {

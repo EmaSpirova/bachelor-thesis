@@ -6,7 +6,7 @@ export class City{
 
     constructor(){
         this.id = 1;
-        this.name= 'City name';
-        this.description= 'City description';
+        this.name= '';
+        this.description= '';
     }
 }

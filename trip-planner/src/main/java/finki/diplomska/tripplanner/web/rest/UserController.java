@@ -18,7 +18,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -51,10 +54,8 @@ public class UserController {
                         loginRequest.getPassword()
                 )
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = SecurityConstants.TOKEN_PREFIX +  tokenProvider.generateToken(authentication);
-
         return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
     }
 
@@ -64,10 +65,19 @@ public class UserController {
         userValidator.validate(user, result);
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null)return errorMap;
-
         User newUser = userService.saveUser(user);
-
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
-
     }
+
+    @GetMapping(value = "/usernames")
+    public List<String> getAllUsernames (){
+        return this.userService.getAllUsernames();
+    }
+
+    @GetMapping(value = "/password")
+    public Optional<String> getPassword(@RequestBody UserDto userDto){
+
+        return this.userService.getPassword(userDto);
+    }
+
 }

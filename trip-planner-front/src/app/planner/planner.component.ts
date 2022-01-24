@@ -71,7 +71,7 @@ export class PlannerComponent implements OnInit {
         );
         this.messageService.add({ severity: 'success', summary: 'The planner: ' + plannerDto.name + ' has been created.' });
       }
-      
+
     });
 
   }

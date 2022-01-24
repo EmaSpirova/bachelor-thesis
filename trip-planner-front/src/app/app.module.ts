@@ -3,7 +3,7 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryService } from './_services/cateogry.service';
 import { PlannerComponent } from './planner/planner.component';
@@ -25,7 +25,6 @@ import { LocationsFormComponent } from './locations-form/locations-form.componen
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EditPlannerComponent } from './planner/edit-planner/edit-planner.component';
-import { DetailPlannerComponent } from './planner/detail-planner/detail-planner.component';
 import { AddLocationToPlannerPanelComponent } from './location/add-location-to-planner-panel/add-location-to-planner-panel.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AccordionModule } from 'primeng/accordion';     //accordion and accordion tab
@@ -48,7 +47,11 @@ import { RegisterComponent } from './homepage/register/register.component';
 import { LoginComponent } from './homepage/login/login.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
-
+import { ExploreComponent } from './explore/explore.component';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import { ExploreResultComponent } from './explore/explore-result/explore-result.component';
+import {RatingModule} from 'primeng/rating';
+import { CustomValidators } from './providers/CustomValidators';
 
 @NgModule({
   declarations: [
@@ -58,12 +61,13 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     CreateInitialPlannerComponent,
     LocationsFormComponent,
     EditPlannerComponent,
-    DetailPlannerComponent,
     AddLocationToPlannerPanelComponent,
     HomepageComponent,
     LocationDetailsComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ExploreComponent,
+    ExploreResultComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +107,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     RippleModule,
     FormsModule,
     PaginatorModule,
-    CardModule
+    CardModule,
+    AutoCompleteModule,
+    RatingModule
   ],
 
 

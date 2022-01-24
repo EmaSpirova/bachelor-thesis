@@ -1,18 +1,43 @@
-<div class="p-col-12 p-md-4">
-    <div class="p-inputgroup">
-        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-        <input type="text" pInputText placeholder="Email address (Username)" 
-             [(ngModel)]="loginRequest.username" name="username">
-    </div>
-</div>
-<div class="p-col-12 p-md-4">
-    <div class="p-inputgroup">
-        <span class="p-inputgroup-addon"><i class="pi pi-password"></i></span>
-        <input type="password" pInputText placeholder="Password" name="password" [(ngModel)]="loginRequest.password">
-    </div>
-</div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-<div class="p-col-12 p-md-4">
-    <button pButton pRipple label="Log in" class="p-button-secondary" type="submit"
-        (click)="onFormLogIn(loginRequest)"></button>
+
+
+<div class="readersack">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form [formGroup]="form" #myform="ngForm" (ngSubmit)="onFormLogIn(loginRequest)">
+                    <div class="form-group">
+
+                        <label>Username (email)</label>
+                        <input formControlName="username" id="username" type="text" class="form-control"
+                            [(ngModel)]="loginRequest.username"
+                            [ngClass]="{ 'is-invalid': myform.submitted && (form.get('username')?.errors?.['required'] 
+                        || form.get('username')?.errors?.['validateUser'])}" />
+                        <div *ngIf="form.get('username')?.hasError('required') && myform.submitted"
+                            class="invalid-feedback">
+                            Username is required
+                        </div>
+                        <div *ngIf="form.get('username')?.hasError('validateUser') && myform.submitted"
+                            class="invalid-feedback">
+                            Invalid username
+                        </div>
+
+                        <label>Password</label>
+                        <input formControlName="password" id="password" type="password" class="form-control"
+                            [(ngModel)]="loginRequest.password" [ngClass]="{ 'is-invalid': myform.submitted && form.get('password')?.errors?.['required']}" />
+                        <div *ngIf="form.get('password')?.hasError('required') && myform.submitted"
+                            class="invalid-feedback">
+                            Password is required</div>
+                        
+
+                        <div class="p-col-12 p-md-4">
+                            <button type="submit" pButton pRipple class="p-button-secondary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

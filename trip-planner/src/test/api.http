@@ -93,5 +93,17 @@ GET http://localhost:8080/api/planners/user
 Content-Type: application/json
 
 ###
-DELETE http://localhost:8080/api/delete/19
+DELETE http://localhost:8080/api/delete-location
 Content-Type: application/json
+
+{"plannerId": 23, "locationId": 3}
+
+###
+GET http://localhost:8080/api/users/usernames
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/users/password
+Content-Type: application/json
+
+{"username": "ema@test.com"}

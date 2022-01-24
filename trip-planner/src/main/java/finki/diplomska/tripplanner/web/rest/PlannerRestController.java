@@ -4,6 +4,7 @@ import finki.diplomska.tripplanner.models.Location;
 import finki.diplomska.tripplanner.models.Planner;
 import finki.diplomska.tripplanner.models.User;
 import finki.diplomska.tripplanner.models.dto.PlannerDto;
+import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 import finki.diplomska.tripplanner.service.LocationService;
 import finki.diplomska.tripplanner.service.PlannerService;
 import org.springframework.http.HttpStatus;
@@ -91,12 +92,8 @@ public class PlannerRestController {
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
-
-    @DeleteMapping(value = "/delete-from-planner")
-    public ResponseEntity deleteLocationFromPlanner(@PathVariable Long locationId){
-        this.plannerService.deleteLocationFromPlanner(locationId);
-        return this.locationService.findById(locationId)
-                .map(location -> ResponseEntity.ok().body(location))
-                .orElseGet(()-> ResponseEntity.notFound().build());
+    @DeleteMapping(value = "/delete-location")
+    public ResponseEntity deleteLocationFromPlanner(@RequestBody PlannerLocationDto plannerLocationDto){
+       return  this.plannerService.deleteLocationFromPlanner(plannerLocationDto);
     }
 }

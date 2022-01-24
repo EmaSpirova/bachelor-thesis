@@ -92,41 +92,41 @@ export class LocationComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((planner: Planner) => {
-      if(planner){
-      this.plannerLocationDto.locationId = location.id;
-      this.plannerLocationDto.plannerId = planner.id;
-      console.log("LOC ID: " + this.plannerLocationDto.locationId);
-      console.log("PLANNER ID: " + this.plannerLocationDto.plannerId);
+      if (planner) {
+        this.plannerLocationDto.locationId = location.id;
+        this.plannerLocationDto.plannerId = planner.id;
+        console.log("LOC ID: " + this.plannerLocationDto.locationId);
+        console.log("PLANNER ID: " + this.plannerLocationDto.plannerId);
 
-      this.locationService.getAllLocationIdsForPlanner(planner.id).subscribe(
-        lid => {
-          if (lid.length == 0) {
-            this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
-              data => {
-                console.log(data);
-              }
-            );
-            this.messageService.add({ severity: 'success', summary: 'Location ' + location.name + ' has been added to planner: ', detail: planner.name });
-
-          } else if (lid.length > 0) {
-            if (lid.indexOf(this.plannerLocationDto.locationId) !== -1) {
-              console.log("LOKACIJATA VEKE JA IMA VO PLANEROT");
-              this.messageService.add({ severity: 'error', summary: 'Location ' + location.name + ' already exists in the planner.' });
-            } else {
+        this.locationService.getAllLocationIdsForPlanner(planner.id).subscribe(
+          lid => {
+            if (lid.length == 0) {
               this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
                 data => {
                   console.log(data);
                 }
               );
               this.messageService.add({ severity: 'success', summary: 'Location ' + location.name + ' has been added to planner: ', detail: planner.name });
-            }
 
+            } else if (lid.length > 0) {
+              if (lid.indexOf(this.plannerLocationDto.locationId) !== -1) {
+                console.log("LOKACIJATA VEKE JA IMA VO PLANEROT");
+                this.messageService.add({ severity: 'error', summary: 'Location ' + location.name + ' already exists in the planner.' });
+              } else {
+                this.locationService.postLocationToPlanner(this.plannerLocationDto).subscribe(
+                  data => {
+                    console.log(data);
+                  }
+                );
+                this.messageService.add({ severity: 'success', summary: 'Location ' + location.name + ' has been added to planner: ', detail: planner.name });
+              }
+
+            }
           }
-        }
-      );
+        );
       }
     });
-  
+
   }
 
   ngOnDestroy() {

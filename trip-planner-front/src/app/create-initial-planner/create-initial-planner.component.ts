@@ -18,7 +18,7 @@ export class CreateInitialPlannerComponent implements OnInit {
               }
 
   ngOnInit(): void {
-    this.plannerDto = new Planner();
+    this.plannerDto = new PlannerDto();
   }
 
   onFormSubmitPlanner(plannerDto){

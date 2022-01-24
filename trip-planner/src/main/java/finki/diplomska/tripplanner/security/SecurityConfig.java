@@ -77,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(MARIADB_URL).permitAll()
                 .antMatchers("/api/weekend").permitAll()
                 .antMatchers("/api/villages").permitAll()
+                .antMatchers("/api/cities").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

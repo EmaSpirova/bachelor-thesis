@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { identifierModuleUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LoginRequest } from '../_models/dto/loginRequest';
 import { UserDto } from '../_models/dto/userDto';
@@ -19,14 +21,13 @@ import { RegisterComponent } from './register/register.component';
 export class HomepageComponent implements OnInit {
 
    imageURI = 'https://i.pinimg.com/736x/a1/1a/57/a11a572a1ec4e07039bbd04661a3b035.jpg';
-   myLogo = 'http://www.logo-designer.co/wp-content/uploads/2020/02/2020-tripadvisor-new-logo-design-by-mother-design-4.png';
    responsiveOptions;
    locations: Location[];
    villages: Location[];
    ref: DynamicDialogRef;
 
    constructor(private locationService: LocationService, private dialogService: DialogService, private userService: UserService,
-      private router: Router) {
+      private router: Router, private messageService: MessageService) {
       this.responsiveOptions = [
          {
             breakpoint: '1024px',
@@ -60,7 +61,6 @@ export class HomepageComponent implements OnInit {
             this.villages = village;
          }
       );
-
    }
 
    onClickSignUp() {
@@ -81,7 +81,7 @@ export class HomepageComponent implements OnInit {
          }
       },
          err => {
-
+            console.log("oops");
          });
    }
 

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { PlannerDto } from "../_models/dto/plannerDto";
+import { PlannerLocationDto } from "../_models/dto/plannerLocationDto";
 import { Planner } from "../_models/planner";
 
 @Injectable({
@@ -14,7 +15,6 @@ export class PlannerService {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     });
-
 
     constructor(private httpClient: HttpClient) {
     }
@@ -29,7 +29,7 @@ export class PlannerService {
 
     postInitialPlanner(plannerDto: PlannerDto): Observable<Planner> {
         let url = "http://localhost:8080/api/planner/new";
-        return this.httpClient.post<Planner>(url, plannerDto);
+        return this.httpClient.post<Planner>(url, plannerDto, {headers: this.httpHeaders});
     }
 
     updatePlanner(id: number, plannerDto: PlannerDto): Observable<Planner> {
@@ -46,4 +46,17 @@ export class PlannerService {
         let url = "http://localhost:8080/api/delete/" + id;
         return this.httpClient.delete<Planner>(url, { headers: this.httpHeaders });
     }
+
+    deleteLocationFromPlanner(plannerLocationDto : PlannerLocationDto) {
+        let url = "http://localhost:8080/api/delete-location";
+        const options = {
+            body: {
+                "plannerId": plannerLocationDto.plannerId, 
+                "locationId": plannerLocationDto.locationId
+            } 
+        }
+        return this.httpClient.request('delete', url, options);
+    }
+ 
+
 }
