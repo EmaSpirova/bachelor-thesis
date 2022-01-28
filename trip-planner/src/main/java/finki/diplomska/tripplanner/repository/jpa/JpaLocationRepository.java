@@ -108,6 +108,11 @@ public interface JpaLocationRepository extends JpaRepository<Location, Long> {
             "WHERE lb.id_category=4", nativeQuery = true)
     List<Location> getVillages();
 
-    @Query(value = "SELECT * FROM locations AS l WHERE l.id_city = :cityId", nativeQuery = true)
-    List<Location> getLocationsForCity(@Param("cityId") Long cityId);
+    @Query(value = "SELECT * FROM locations AS l " +
+            "LEFT JOIN cities AS c " +
+            "ON l.id_city = c.id_city " +
+            "LEFT JOIN regions AS r " +
+            "ON l.id_region = r.id_region " +
+            "WHERE c.city_name = :place OR r.region_name = :place", nativeQuery = true)
+    List<Location> getAllLocations(@Param("place") String place);
 }

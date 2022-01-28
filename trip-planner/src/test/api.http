@@ -107,3 +107,12 @@ GET http://localhost:8080/api/users/password
 Content-Type: application/json
 
 {"username": "ema@test.com"}
+
+###
+GET http://localhost:8080/api/all?place=Skopje
+Content-Type: application/json
+
+
+###
+GET http://localhost:8080/api/places
+Content-Type: application/json

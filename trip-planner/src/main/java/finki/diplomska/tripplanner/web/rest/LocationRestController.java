@@ -76,4 +76,9 @@ public class LocationRestController {
         return this.locationService.getAllLocationIdsForPlanner(plannerId);
     }
 
+    @GetMapping(value = "/all")
+    public List<Location> getAllLocations(@RequestParam String place){
+        return this.locationService.getAllLocations(place);
+    }
+
 }

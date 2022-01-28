@@ -14,4 +14,9 @@ export class RegionService{
         let url = "http://localhost:8080/api/regions";
         return this.httpClient.get<Region[]>(url);
     }
+
+    getAllCitiesAndRegions() :Observable<string[]>{
+        let url = "http://localhost:8080/api/places";
+        return this.httpClient.get<string[]>(url);
+    }
 }

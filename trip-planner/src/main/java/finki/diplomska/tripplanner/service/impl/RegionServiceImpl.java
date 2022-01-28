@@ -20,4 +20,9 @@ public class RegionServiceImpl implements RegionService {
     public List<Region> findAll() {
         return this.regionRepository.findAll();
     }
+
+    @Override
+    public List<String> getAllCitiesAndRegions() {
+        return this.regionRepository.getAllCitiesAndRegions();
+    }
 }

@@ -24,5 +24,5 @@ public interface LocationService {
     List<Location> getWeekendGetaways();
     List<Location> getVillages();
     List<Long> getAllLocationIdsForPlanner(Long plannerId);
-    List<Location> getLocationsForCity(Long cityId);
+    List<Location> getAllLocations(String place);
 }

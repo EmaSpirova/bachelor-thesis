@@ -60,4 +60,8 @@ export class LocationService{
         return this.httpClient.get<number[]>(url + "?plannerId="+id);
     }
     
+    getAllLocationsSearch(place : string) : Observable<Location[]>{
+        let url="http://localhost:8080/api/all"; 
+        return this.httpClient.get<Location[]>(url + "?place=" + place);
+    }
 }

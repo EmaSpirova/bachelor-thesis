@@ -24,4 +24,9 @@ public class RegionRestController {
     public List<Region> findAllRegions(){
         return this.regionService.findAll();
     }
+
+    @GetMapping(value = "/places")
+    public List<String> getAllCitiesAndRegions(){
+        return this.regionService.getAllCitiesAndRegions();
+    }
 }
