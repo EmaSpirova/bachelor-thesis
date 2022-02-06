@@ -98,4 +98,8 @@ export class PlannerComponent implements OnInit {
     );
     window.location.reload();
   }
+
+  onClickAddLocation(){
+    this.router.navigate(['add-location']);
+  }
 }

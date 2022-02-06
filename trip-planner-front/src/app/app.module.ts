@@ -51,7 +51,10 @@ import { ExploreComponent } from './explore/explore.component';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { ExploreResultComponent } from './explore/explore-result/explore-result.component';
 import {RatingModule} from 'primeng/rating';
-import { CustomValidators } from './providers/CustomValidators';
+import { AddLocationComponent } from './location/add-location/add-location.component';
+import {StepsModule} from 'primeng/steps';
+import {MatStepperModule} from '@angular/material/stepper';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -67,8 +70,9 @@ import { CustomValidators } from './providers/CustomValidators';
     RegisterComponent,
     LoginComponent,
     ExploreComponent,
-    ExploreResultComponent
-  ],
+    ExploreResultComponent,
+    AddLocationComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -109,8 +113,11 @@ import { CustomValidators } from './providers/CustomValidators';
     PaginatorModule,
     CardModule,
     AutoCompleteModule,
-    RatingModule
-  ],
+    RatingModule,
+    StepsModule,
+    MatStepperModule,
+    FileUploadModule
+    ],
 
 
   providers: [

@@ -1,0 +1,110 @@
+<mat-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable" [completed]="isCompleted">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Location properties</ng-template>
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput [(ngModel)]="name" formControlName="name" required>
+            </mat-form-field>
+<label></label>
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <input matInput [(ngModel)]="desc" formControlName="desc" required>
+            </mat-form-field>
+<label></label>
+            <mat-form-field appearance="fill">
+                <mat-label>Address</mat-label>
+                <input matInput [(ngModel)]="address" formControlName="address" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Duration</mat-label>
+                <input matInput [(ngModel)]="duration" type="number" formControlName="duration" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Trivia</mat-label>
+                <input matInput [(ngModel)]="trivia" formControlName="trivia" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Priority</mat-label>
+              <mat-select [(ngModel)]="priority" name="priority" [ngModelOptions]="{standalone: true}" >
+                <mat-option *ngFor="let priority of priorities" [value]="priority.value">
+                  {{priority.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <label>
+                <h5>Please select a city</h5>
+            </label>
+            <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Please select a city</mat-label>
+                <mat-select [(ngModel)]="cityId" placeholder="Select city" name="city" [ngModelOptions]="{standalone: true}">
+                    <mat-option [value]="city.id" *ngFor="let city of cities"> {{city.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <label>
+                <h5>Please select a region</h5>
+              </label>
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Please select a region</mat-label>
+                <mat-select [(ngModel)]="regionId" placeholder="Select region" name="region" [ngModelOptions]="{standalone: true}">
+                  <mat-option [value]="region.id" *ngFor="let region of regions" [value]="region.id"> {{region.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <p-fileUpload #fubauto mode="basic" name="demo[]" url=""  chooseLabel="Image"></p-fileUpload>
+
+            <div>
+                <button mat-button matStepperNext (click)="submitLocation()">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable" [completed]="isCompletedSecond">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Add companion for the location</ng-template>
+            <mat-form-field appearance="fill">
+                <mat-label>Companion</mat-label>
+                <mat-select [formControl]="companionForm" multiple>
+                  <mat-select-trigger>
+                    {{companionForm.value ? companionForm.value[0] : ''}}
+                    <span *ngIf="companionForm.value?.length > 1" class="example-additional-selection">
+                      (+{{companionForm.value.length - 1}} {{companionForm.value?.length === 2 ? 'other' : 'others'}})
+                    </span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let companion of companions" [value]="companion">{{companion.type}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <div>
+                <button mat-button matStepperNext (click)="onClickSecondForm()">Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup" [editable]="isEditable">
+        <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Add categories for the location</ng-template>
+            <mat-chip-list selectable multiple>
+                <mat-chip #c="matChip" selected *ngFor="let category of categories" (click)="toggleSelection(c, category)"
+                  [ngClass]="{'yellow' : toggle}" name="chips">
+                  <mat-icon *ngIf="!c.selected">check</mat-icon>
+                  {{category.name}}
+                </mat-chip>
+              </mat-chip-list>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-stepper>

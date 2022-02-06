@@ -14,7 +14,7 @@
   </header>
 
   <main role="main">
-    <h1 style="color: #F77D62; display: inline; ">Explore </h1>
+    <h1 style="color: #F77D62; display: inline;">Explore</h1>
     <h1 style=" display: inline;">{{place}}</h1>
     <div class="lightbox" *ngFor="let l of allLocation">
       <div class="row">
@@ -24,6 +24,9 @@
       </div>
       </div>
     </div>
+
+
+    
     <div class="container">
       <li *ngFor="let location of allLocation">
         <ol>{{location.name}}</ol>

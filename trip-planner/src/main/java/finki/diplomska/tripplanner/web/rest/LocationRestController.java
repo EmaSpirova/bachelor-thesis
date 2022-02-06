@@ -1,10 +1,13 @@
 package finki.diplomska.tripplanner.web.rest;
 
 import finki.diplomska.tripplanner.models.Location;
+import finki.diplomska.tripplanner.models.User;
+import finki.diplomska.tripplanner.models.dto.LocationDto;
 import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 import finki.diplomska.tripplanner.service.LocationService;
 import finki.diplomska.tripplanner.service.PlannerService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -81,4 +84,11 @@ public class LocationRestController {
         return this.locationService.getAllLocations(place);
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<Location> save(@RequestBody LocationDto locationDto, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return this.locationService.save(locationDto, user.getUsername())
+                .map(location -> ResponseEntity.ok().body(location))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
 }

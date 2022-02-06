@@ -3,6 +3,7 @@ package finki.diplomska.tripplanner.service;
 
 import finki.diplomska.tripplanner.models.Location;
 import finki.diplomska.tripplanner.models.Planner;
+import finki.diplomska.tripplanner.models.dto.LocationDto;
 import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
 import org.springframework.data.repository.query.Param;
 
@@ -25,4 +26,5 @@ public interface LocationService {
     List<Location> getVillages();
     List<Long> getAllLocationIdsForPlanner(Long plannerId);
     List<Location> getAllLocations(String place);
+    Optional<Location> save (LocationDto locationDto, String username);
 }

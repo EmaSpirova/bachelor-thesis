@@ -1,11 +1,13 @@
 package finki.diplomska.tripplanner.service.impl;
 
-import finki.diplomska.tripplanner.models.Location;
-import finki.diplomska.tripplanner.models.Planner;
+import finki.diplomska.tripplanner.models.*;
+import finki.diplomska.tripplanner.models.dto.LocationDto;
 import finki.diplomska.tripplanner.models.dto.PlannerLocationDto;
+import finki.diplomska.tripplanner.models.exceptions.CityNotFoundException;
+import finki.diplomska.tripplanner.models.exceptions.CompanionNotFoundException;
 import finki.diplomska.tripplanner.models.exceptions.LocationNotFoundException;
-import finki.diplomska.tripplanner.repository.jpa.JpaLocationRepository;
-import finki.diplomska.tripplanner.repository.jpa.JpaPlannerRepository;
+import finki.diplomska.tripplanner.models.exceptions.RegionNotFoundException;
+import finki.diplomska.tripplanner.repository.jpa.*;
 import finki.diplomska.tripplanner.service.LocationService;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +20,20 @@ public class LocationServiceImpl implements LocationService {
 
     private final JpaLocationRepository locationRepository;
     private final JpaPlannerRepository plannerRepository;
+    private final JpaRegionRepository regionRepository;
+    private final JpaCityRepository cityRepository;
+    private final JpaUserRepository userRepository;
+    private final JpaCategoryRepository categoryRepository;
+    private final JpaCompanionRepository companionRepository;
 
-    public LocationServiceImpl(JpaLocationRepository locationRepository, JpaPlannerRepository plannerRepository) {
+    public LocationServiceImpl(JpaLocationRepository locationRepository, JpaPlannerRepository plannerRepository, JpaRegionRepository regionRepository, JpaCityRepository cityRepository, JpaUserRepository userRepository, JpaCategoryRepository categoryRepository, JpaCompanionRepository companionRepository) {
         this.locationRepository = locationRepository;
         this.plannerRepository = plannerRepository;
+        this.regionRepository = regionRepository;
+        this.cityRepository = cityRepository;
+        this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
+        this.companionRepository = companionRepository;
     }
 
     @Override
@@ -150,7 +162,6 @@ public class LocationServiceImpl implements LocationService {
                 }
             }
         }
-
         return newList;
     }
 
@@ -188,5 +199,21 @@ public class LocationServiceImpl implements LocationService {
         return this.locationRepository.getAllLocations(place);
     }
 
+    @Override
+    public Optional<Location> save(LocationDto locationDto, String username) {
+        City city = new City();
+        Region region = this.regionRepository.findById(locationDto.getRegion())
+                .orElseThrow(() -> new RegionNotFoundException(locationDto.getRegion()));
+        if(locationDto.getCity() != null){
+             city = this.cityRepository.findById(locationDto.getCity())
+                    .orElseThrow(() -> new CityNotFoundException(locationDto.getCity()));
+        }else{
+            city = null;
+        }
+        User user = this.userRepository.findByUsername(username);
+        locationDto.setUser(user.getUsername());
+        return Optional.of(this.locationRepository.save(new Location(locationDto.getName(), locationDto.getDescription(), locationDto.getAddress(), locationDto.getPriority(),
+                locationDto.getDuration(), locationDto.getTrivia(), locationDto.getPhoto(), region, city, user)));
+    }
 
 }

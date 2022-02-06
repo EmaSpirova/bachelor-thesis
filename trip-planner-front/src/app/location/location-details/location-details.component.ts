@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Images } from 'src/app/_models/images';
 import { Location } from 'src/app/_models/location';
 import { ImagesService } from 'src/app/_services/images.service';
@@ -16,7 +16,7 @@ export class LocationDetailsComponent implements OnInit {
   locationDetails: Location;
   images: Images[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private locationService: LocationService,
+  constructor(private route: ActivatedRoute, private locationService: LocationService,
     private imagesService: ImagesService) {
     this.locationId = 1;
     this.locationDetails = new Location();

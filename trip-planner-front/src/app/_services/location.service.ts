@@ -1,6 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { LocationDto } from "../_models/dto/locationDto";
 import { PlannerLocationDto } from "../_models/dto/plannerLocationDto";
 import { Location } from "../_models/location";
 
@@ -8,6 +9,13 @@ import { Location } from "../_models/location";
     providedIn: 'root'
 })
 export class LocationService{
+
+    httpHeaders: HttpHeaders = new HttpHeaders({
+        'Authorization': '' + sessionStorage.getItem("token"),
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    });
+
     constructor(private httpClient : HttpClient){}
 
     getLocationsFromCity(cityId: number, companionId: number, lengthOfStay: number, categoryIds: string): Observable<Location[]>{
@@ -63,5 +71,10 @@ export class LocationService{
     getAllLocationsSearch(place : string) : Observable<Location[]>{
         let url="http://localhost:8080/api/all"; 
         return this.httpClient.get<Location[]>(url + "?place=" + place);
+    }
+
+    save(locationDto : LocationDto) : Observable<Location>{
+        let url = "http://localhost:8080/api/add";
+        return this.httpClient.post<Location>(url, locationDto, {headers: this.httpHeaders});
     }
 }

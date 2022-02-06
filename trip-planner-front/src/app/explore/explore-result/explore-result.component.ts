@@ -16,6 +16,20 @@ export class ExploreResultComponent implements OnInit {
     this.place = '';
   }
 
+  responsiveOptions:any[] = [
+    {
+        breakpoint: '1024px',
+        numVisible: 5
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 3
+    },
+    {
+        breakpoint: '560px',
+        numVisible: 1
+    }
+];
   ngOnInit(): void {
     this.route.queryParams
       .subscribe(params => {
@@ -24,8 +38,8 @@ export class ExploreResultComponent implements OnInit {
     );
 
       this.locationService.getAllLocationsSearch(this.place).subscribe(
-        data => {
-          this.allLocation = data;
+        res => {
+          this.allLocation = res;
         }
     )
   }

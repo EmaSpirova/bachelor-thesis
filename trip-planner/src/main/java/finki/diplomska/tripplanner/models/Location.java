@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "locations")
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -64,6 +63,10 @@ public class Location {
     @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Planner> plannerList;
 
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "id_user")
+    private User user;
 
     @ManyToMany
     @JoinTable(
@@ -73,10 +76,23 @@ public class Location {
     @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Category> categoryList;
 
-
     @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
     private List<Images> imagesList;
 
+    public Location(String name, String description, String address, String priority, int duration, String trivia, byte[] photo, Region region, City city, User user) {
+        this.name = name;
+        this.description = description;
+        this.address = address;
+        this.priority = priority;
+        this.duration = duration;
+        this.trivia = trivia;
+        this.photo = photo;
+        this.region = region;
+        this.city = city;
+        this.user = user;
+    }
 
+    public Location() {
+    }
 }

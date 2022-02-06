@@ -1,6 +1,7 @@
 package finki.diplomska.tripplanner.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,6 +44,10 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     @JsonIgnore
     private List<Planner> planners = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "user", orphanRemoval = true)
+    @JsonIgnore
+    private List<Location> locationList = new ArrayList<>();;
 
     public User() {
     }

@@ -68,7 +68,6 @@ public class PlannerRestController {
     @PostMapping(value = "/planner/new", consumes= MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> newPlanner(@Valid @RequestBody PlannerDto plannerDto, Authentication authentication)  {
-
         User user = (User) authentication.getPrincipal();
         return this.plannerService.newPlanner(plannerDto, user.getUsername())
                 .map(planner -> ResponseEntity.ok().body(planner))
