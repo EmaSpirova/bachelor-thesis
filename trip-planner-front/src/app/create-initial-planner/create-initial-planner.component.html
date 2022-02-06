@@ -1,18 +1,16 @@
-  <div mat-dialog-content>
-    <p>Planner name</p>
-    <mat-form-field appearance="fill">
-      <input matInput  type="text" [(ngModel)]="plannerDto.name" name="plannerName" placeholder="Planner name">
-     
-    </mat-form-field>
-    <p>Planner description</p>
-    <mat-form-field appearance="fill">
-      <textarea matInput  name="description" [(ngModel)]="plannerDto.description" type="text"
-        placeholder="Planner description"></textarea>
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions>
-    <button pButton pRipple type="button" label="Save" 
-      class="p-button-outlined p-button-rounded p-button-help" (click)="onFormSubmitPlanner(plannerDto)"></button>
-  </div>
+<div mat-dialog-content>
+  <p>Planner name</p>
+  <mat-form-field appearance="fill">
+    <input matInput type="text" [(ngModel)]="plannerDto.name" name="plannerName" placeholder="Planner name">
 
- 
+  </mat-form-field>
+  <p>Planner description</p>
+  <mat-form-field appearance="fill">
+    <textarea matInput name="description" [(ngModel)]="plannerDto.description" type="text"
+      placeholder="Planner description"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button pButton pRipple type="button" label="Save" class="p-button-outlined p-button-rounded p-button-help"
+    (click)="onFormSubmitPlanner(plannerDto)"></button>
+</div>

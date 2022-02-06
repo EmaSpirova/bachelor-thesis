@@ -129,7 +129,6 @@ export class LocationsFormComponent implements OnInit {
   }
 
 
-
   createMyPlanner() {
     this.categoryIds = this.chipsSeletion.join(',');
     console.log(this.categoryIds);

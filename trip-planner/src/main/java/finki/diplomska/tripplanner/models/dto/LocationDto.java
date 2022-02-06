@@ -47,7 +47,6 @@ public class LocationDto {
         this.companions = companions;
         this.categories = categories;
     }
-
     public LocationDto() {
     }
 }

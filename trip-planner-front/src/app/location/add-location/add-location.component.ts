@@ -113,8 +113,7 @@ export class AddLocationComponent implements OnInit {
       this.locationDto.region = this.regionId;
       if(this.name !== null && this.desc !== null && this.address !== null
         && this.trivia != null  && this.priority !== null && this.cityId !== 0 && this.regionId !== 0){
-          this.isCompleted = true;
-        
+          this.isCompleted = true;        
           this.locationService.save(this.locationDto).subscribe(
             data => {
               console.log(data);
